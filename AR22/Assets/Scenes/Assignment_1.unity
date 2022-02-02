@@ -235,7 +235,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fb59810609949debdea9985a2082b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myPrefab: {fileID: 3160051968806204753, guid: b34277c9bb160921290de10ddd5c38ed, type: 3}
+  cube: {fileID: 0}
+  sphere: {fileID: 0}
+  cylinder: {fileID: 0}
   plane: {fileID: 2082395068}
 --- !u!4 &845485885
 Transform:

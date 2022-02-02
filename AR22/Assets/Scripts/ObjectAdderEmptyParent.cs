@@ -6,7 +6,16 @@ public class ObjectAdderEmptyParent : MonoBehaviour
 {
 
     [SerializeField] 
-    private GameObject myPrefab;
+    private GameObject cube;
+    
+    [SerializeField] 
+    private GameObject sphere;
+    
+    [SerializeField] 
+    private GameObject cylinder;
+    
+    [SerializeField] 
+    private Camera camera;
     
     [SerializeField] 
     private Transform plane;
@@ -14,12 +23,25 @@ public class ObjectAdderEmptyParent : MonoBehaviour
     void Start()
     {
     	Debug.Log("Hello World");
-    	Instantiate(myPrefab, plane);
+    	Instantiate(cube, plane);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+	    if (Input.GetKeyDown(KeyCode.K))
+	    {
+		    Instantiate(sphere, new Vector3(1.0f, 1.0f, 1.0f), new Quaternion());
+	    } else if (Input.GetMouseButtonDown(0))
+	    {
+			RaycastHit hit;
+        	Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        	if (Physics.Raycast(ray, out hit)) {
+            	Vector3 point = hit.point;
+            	Instantiate(cylinder, point, new Quaternion());
+            	// Do something with the object that was hit by the raycast.
+        	}
+		    
+	    }
     }
 }
