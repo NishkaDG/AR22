@@ -235,9 +235,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fb59810609949debdea9985a2082b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cube: {fileID: 0}
-  sphere: {fileID: 0}
-  cylinder: {fileID: 0}
+  cube: {fileID: 3160051968806204753, guid: b34277c9bb160921290de10ddd5c38ed, type: 3}
+  sphere: {fileID: 4311131557487216074, guid: 837a4f872828298599c4964c5a44f780, type: 3}
+  cylinder: {fileID: 7712929788024420847, guid: dc667853e00b217e8ae0788f383ce515, type: 3}
+  camera: {fileID: 725245889}
   plane: {fileID: 2082395068}
 --- !u!4 &845485885
 Transform:

@@ -23,7 +23,8 @@ public class ObjectAdderEmptyParent : MonoBehaviour
     void Start()
     {
     	Debug.Log("Hello World");
-    	Instantiate(cube, plane);
+    	GameObject gameObject = Instantiate(cube, plane);
+        gameObject.AddComponent<MoveAround>();
     }
 
     // Update is called once per frame
