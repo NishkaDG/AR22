@@ -1,9 +1,8 @@
 # Augmented Reality - 2022
 
 ## Group
-* Name 1
-* Name 2
-* Name 3
+* Rasmus Thorsøe
+* Sam Martin Vargas Giagnocavo
 
 <!-- [TODO: cool image of group members - only if you like] -->
 
