@@ -13,7 +13,7 @@ public class MoveAround : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Transform parentTransform = this.GetComponentInParent<Transform>();
+        Transform parentTransform = GetComponentInParent<Transform>();
         if (Input.GetKey(KeyCode.W))
         {
             parentTransform.Translate(parentTransform.forward * 0.1f);
