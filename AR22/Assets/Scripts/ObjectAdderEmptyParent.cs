@@ -14,6 +14,8 @@ public class ObjectAdderEmptyParent : MonoBehaviour
     [SerializeField] 
     private GameObject cylinder;
     
+    [SerializeField] 
+    private Transform parent;
     
     [SerializeField] 
     private Transform plane;
@@ -21,7 +23,7 @@ public class ObjectAdderEmptyParent : MonoBehaviour
     void Start()
     {
     	Debug.Log("Hello World");
-    	GameObject gameObject = Instantiate(cube, plane);
+    	GameObject gameObject = Instantiate(cube, plane.position, new Quaternion(), parent);
         gameObject.AddComponent<MoveAround>();
     }
 
@@ -30,14 +32,14 @@ public class ObjectAdderEmptyParent : MonoBehaviour
     {
 	    if (Input.GetKeyDown(KeyCode.K))
 	    {
-		    Instantiate(sphere, new Vector3(1.0f, 1.0f, 1.0f), new Quaternion());
+		    Instantiate(sphere, new Vector3(1.0f, 1.0f, 1.0f), new Quaternion(), parent);
 	    } else if (Input.GetMouseButtonDown(0))
 	    {
 			RaycastHit hit;
         	Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         	if (Physics.Raycast(ray, out hit)) {
             	Vector3 point = hit.point;
-            	Instantiate(cylinder, point, new Quaternion());
+            	Instantiate(cylinder, point, new Quaternion(), parent);
             	// Do something with the object that was hit by the raycast.
         	}
 		    

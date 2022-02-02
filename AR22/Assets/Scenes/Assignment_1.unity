@@ -123,6 +123,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &652752834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 652752835}
+  m_Layer: 0
+  m_Name: GeneratedObjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &652752835
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652752834}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &725245887
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +268,7 @@ MonoBehaviour:
   cube: {fileID: 3160051968806204753, guid: b34277c9bb160921290de10ddd5c38ed, type: 3}
   sphere: {fileID: 4311131557487216074, guid: 837a4f872828298599c4964c5a44f780, type: 3}
   cylinder: {fileID: 7712929788024420847, guid: dc667853e00b217e8ae0788f383ce515, type: 3}
-  camera: {fileID: 725245889}
+  parent: {fileID: 652752835}
   plane: {fileID: 2082395068}
 --- !u!4 &845485885
 Transform:
