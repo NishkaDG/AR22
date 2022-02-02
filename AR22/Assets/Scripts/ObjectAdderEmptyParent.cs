@@ -14,8 +14,6 @@ public class ObjectAdderEmptyParent : MonoBehaviour
     [SerializeField] 
     private GameObject cylinder;
     
-    [SerializeField] 
-    private Camera camera;
     
     [SerializeField] 
     private Transform plane;
@@ -36,7 +34,7 @@ public class ObjectAdderEmptyParent : MonoBehaviour
 	    } else if (Input.GetMouseButtonDown(0))
 	    {
 			RaycastHit hit;
-        	Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        	Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         	if (Physics.Raycast(ray, out hit)) {
             	Vector3 point = hit.point;
             	Instantiate(cylinder, point, new Quaternion());
