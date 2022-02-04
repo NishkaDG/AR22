@@ -19,6 +19,8 @@ public class ObjectAdder : MonoBehaviour
     
     private Vector3 midairPos = new Vector3(0.0f, 5.0f, 3.0f);
     private Vector3 raycastPos, raycastSize;
+    
+    private GameObject parent;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +28,9 @@ public class ObjectAdder : MonoBehaviour
         float planeY;
         GameObject plane;
         Vector3 cubeSize, cubePos, planePos;
+        
+        // Create empty parent
+        parent = new GameObject("Generated Objects");
 
         // A crappy Unity script is born...
         Debug.Log("Hello, World");
@@ -47,7 +52,7 @@ public class ObjectAdder : MonoBehaviour
         cubePos += new Vector3(0, cubeSize.y / 2, 0);
         
         // We create the prefab :D
-        Instantiate(prefab, cubePos, Quaternion.identity);
+        Instantiate(prefab, cubePos, Quaternion.identity, parent.transform);
         GameObject.Find("Cube").AddComponent<MoveAround>();        
     }
 
@@ -58,14 +63,14 @@ public class ObjectAdder : MonoBehaviour
         RaycastHit hit;
         
         if (Input.GetKeyDown(KeyCode.K)) {
-            Instantiate(midairPrefab, midairPos, Quaternion.identity);
+            Instantiate(midairPrefab, midairPos, Quaternion.identity, parent.transform);
         } else if (Input.GetKeyDown(KeyCode.Mouse0)) {
             ray = camera.ScreenPointToRay(Input.mousePosition);
         
             if (Physics.Raycast(ray, out hit)) {
                 raycastPos = ray.GetPoint(hit.distance);
                 raycastPos.y += raycastSize.y / 2;
-                Instantiate(raycastPrefab, raycastPos, Quaternion.identity);
+                Instantiate(raycastPrefab, raycastPos, Quaternion.identity, parent.transform);
             }
         }
     }
