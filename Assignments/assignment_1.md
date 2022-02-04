@@ -174,10 +174,17 @@ public class ObjectAdder : MonoBehaviour
 }
 ```
 ### <ins>Exercise 4.1</ins>
-Ideas?
+Our initial idea for the upcoming assignments consists of an application that would let the user build blocks and other structures in the "real world" (an AR LEGO®).
+
+The user would use his phone as a viewport to a canvas (which in this case would be his surroundings). From the device the user would be able to select different types of blocks and drag them to different positions.
+
+In the following image we can see the main view of the application.
+![lego](media/assignment_1/lego.png)
 
 ## Conclusion
-[TODO: conclusions of this weeks exercises]
+Throughout this assignment we have learned the basics for creating a small and simple 3D application in Unity. From user input to object creation, all of these concepts will be necessary for developing an AR application in the upcoming assignments.
+
+Finally, during this assignment we have started considering several ideas and themes for the application, settling for now for a simple AR building app.
 
 ## References
 - [Unity Docs](https://docs.unity3d.com/Manual/index.html)
