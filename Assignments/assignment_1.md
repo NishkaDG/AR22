@@ -93,6 +93,7 @@ void Start()
 ```
 
 The hierarchy in the prefab is as follows: 
+
 ![empty_cube_parent](media/assignment_1/empty_cube_parent.png)
 
 ### <ins>Exercise 3.2</ins>
@@ -125,9 +126,9 @@ void Update()
     }
 }
 ```
-In 3.1 we created the cube inside Start(), but in 3.1 we created the raycast and midair objects inside Update(). This makes sense, since Start() is only run once per object, when the object is created, and we only wanted the one cube, and we wanted it immediately. Update() is run once per frame, and should be used for the behaviour of the object, in this case the behaviour of the object is to place the `midair` and ``raycast` objects on demand. 
+In 3.1 we created the cube inside Start(), but in 3.1 we created the raycast and midair objects inside Update(). This makes sense, since Start() is only run once per object, when the object is created, and we only wanted the one cube, and we wanted it immediately. Update() is run once per frame, and should be used for the behaviour of the object, in this case the behaviour of the object is to place the `midair` and `raycast` objects on demand. 
 
-INSERT GIF?
+![img](media/assignment_1/objects%20and%20movement.gif)
 
 ### <ins>Exercise 3.4</ins>
 With the `MoveAround.cs` script created from the Project pane, we add the following line at the end of the *Start* function in `ObjectAdder.cs`.
