@@ -1,10 +1,10 @@
 # Assignment 1 - Unity basics (ungraded)
 
-**Date**: [TODO: date]
+**Date**: 02/02/2022
 
-**Group members participating**: Rasmus Thorsøe and Sam Martin Vargas Giagnocavo (Luis?).
+**Group members participating**: Rasmus Thorsøe, Sam Martin Vargas Giagnocavo
 
-**Activity duration**: [TODO: Insert hours spend]
+**Activity duration**: 5 hours per person 
 
 ## Goal
 - Form a group.
