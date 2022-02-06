@@ -7,31 +7,39 @@ public class MoveAround : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Transform parentTransform = GetComponentInParent<Transform>();
+        float x, y, z;
+        x = transform.rotation.x;
+        y = transform.rotation.y;
+        z = transform.rotation.z;
         if (Input.GetKey(KeyCode.W))
         {
-            parentTransform.Translate(parentTransform.forward * 0.1f);
-        } else if (Input.GetKey(KeyCode.S))
+            transform.position += new Vector3(0, 0, 0.1f);
+        }
+        else if (Input.GetKey(KeyCode.A))
         {
-            parentTransform.Translate(parentTransform.forward * -0.1f);
-        } else if (Input.GetKey(KeyCode.D))
+            transform.position -= new Vector3(0.1f, 0, 0);
+        }
+        else if (Input.GetKey(KeyCode.S))
         {
-            parentTransform.Translate(parentTransform.right * 0.1f);
-        } else if (Input.GetKey(KeyCode.A))
+            transform.position -= new Vector3(0, 0, 0.1f);
+        }
+        else if (Input.GetKey(KeyCode.D))
         {
-            parentTransform.Translate(parentTransform.right * -0.1f);
-        } else if (Input.GetKey(KeyCode.E))
+            transform.position += new Vector3(0.1f, 0, 0);
+        }
+        else if (Input.GetKey(KeyCode.Q))
         {
-            parentTransform.Rotate(parentTransform.up, 5);
-        } else if (Input.GetKey(KeyCode.Q))
+            transform.RotateAround(transform.position, -transform.up, Time.deltaTime * 90f);
+        }
+        else if (Input.GetKey(KeyCode.E))
         {
-            parentTransform.Rotate(parentTransform.up, -5);
+            transform.RotateAround(transform.position, transform.up, Time.deltaTime * 90f);
         }
     }
 }
