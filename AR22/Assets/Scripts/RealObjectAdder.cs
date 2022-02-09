@@ -5,21 +5,19 @@ using UnityEngine;
 public class RealObjectAdder : MonoBehaviour
 {
     
+    [SerializeField]
     Camera camera;
 
+    [SerializeField]
+    GameObject prefab;
+    
     // GameObject we are going to create 
+    // and its Rigidbody
     GameObject cubeObj;
+    Rigidbody rigidBody;
     
     // Start is called before the first frame update
-    void Start()
-    {
-        camera = Camera.main;     
-        cubeObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cubeObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-        cubeObj.AddComponent<Rigidbody>();
-        cubeObj.GetComponent<Collider>()
-            .attachedRigidbody.useGravity = true;        
-    }
+    void Start() { }
 
     // Update is called once per frame
     void Update()
@@ -34,14 +32,28 @@ public class RealObjectAdder : MonoBehaviour
         Touch touch;
         
         if (Input.touchCount > 0) {
+
             touch = Input.GetTouch(0);
             
             if (touch.phase == TouchPhase.Began) {
+
                 ray = camera.ScreenPointToRay(touch.position);
             
                 if (Physics.Raycast(ray, out hit)) {
                     raycastPos = ray.GetPoint(hit.distance);
-                    Instantiate(cubeObj, raycastPos, Quaternion.identity);
+                    /* cubeObj = GameObject.CreatePrimitive(PrimitiveType.Cube); */
+                    /* // Scale of (0.2, 0.2, 0.2) */
+                    /* cubeObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f); */
+
+                    /* /1* // Add Rigidbody with gravity enabled *1/ */ 
+                    /* rigidBody = cubeObj.AddComponent<Rigidbody>(); */
+                    /* rigidBody.useGravity = true; */
+                    
+                    // We have to add an offset
+                    raycastPos.y += 2;
+
+                    /* Instantiate(cubeObj, raycastPos, Quaternion.identity); */
+                    Instantiate(prefab, raycastPos, Quaternion.identity);
                 }
             }
         }
