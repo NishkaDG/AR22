@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
 public class RealObjectAdder : MonoBehaviour
 {
+    
+    [SerializeField]
+    ARRaycastManager m_RaycastManager;
 
     [SerializeField] 
     private GameObject cubePrefab;
@@ -25,11 +29,16 @@ public class RealObjectAdder : MonoBehaviour
             {
                 return;
             }
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(touch.position);
-            if (Physics.Raycast(ray, out hit)) {
-                Vector3 point = hit.point;
-                var thing = Instantiate(cubePrefab, point, new Quaternion());
+            List<ARRaycastHit> m_Hits = new List<ARRaycastHit>();
+            if (m_RaycastManager.Raycast(Input.GetTouch(0).position, m_Hits))
+            {
+                var hit = m_Hits[0];
+                if (hit.trackable is ARPlane plane)
+                {
+                    Debug.Log($"Hit a plane");
+                    Vector3 point = hit.pose.position;
+                    var thing = Instantiate(cubePrefab, point, new Quaternion(), parent);
+                }
                 // Do something with the object that was hit by the raycast.
             }
         }
