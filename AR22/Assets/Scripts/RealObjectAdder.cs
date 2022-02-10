@@ -13,6 +13,9 @@ public class RealObjectAdder : MonoBehaviour
     private GameObject cubePrefab;
     
     [SerializeField] 
+    private GameObject marker;
+    
+    [SerializeField] 
     private Transform parent;
     
     void Start()
@@ -29,18 +32,7 @@ public class RealObjectAdder : MonoBehaviour
             {
                 return;
             }
-            List<ARRaycastHit> m_Hits = new List<ARRaycastHit>();
-            if (m_RaycastManager.Raycast(Input.GetTouch(0).position, m_Hits))
-            {
-                var hit = m_Hits[0];
-                if (hit.trackable is ARPlane plane)
-                {
-                    Debug.Log($"Hit a plane");
-                    Vector3 point = hit.pose.position;
-                    var thing = Instantiate(cubePrefab, point, new Quaternion(), parent);
-                }
-                // Do something with the object that was hit by the raycast.
-            }
+            Instantiate(cubePrefab, marker.transform.position, marker.transform.rotation, parent);
         }
     }
 }
