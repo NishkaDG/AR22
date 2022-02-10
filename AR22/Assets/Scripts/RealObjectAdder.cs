@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
 public class RealObjectAdder : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class RealObjectAdder : MonoBehaviour
     [SerializeField]
     GameObject realCube;
     
+    [SerializeField]
+    GameObject placeholder;
+    GameObject activePlaceholder;
+
+    [SerializeField]
+    ARRaycastManager raycastManager;
+    
     // GameObject we are going to create 
     // and its Rigidbody
     GameObject cubeObj;
@@ -18,45 +26,56 @@ public class RealObjectAdder : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         camera = Camera.main;
+        activePlaceholder = null;     
     }
-
     // Update is called once per frame
     void Update()
     {
         
-        // Raycast stuff
         Ray ray;
-        RaycastHit hit;
-        Vector3 raycastPos;
-        
-        // Input-related stuff
         Touch touch;
+        Vector3 raycastPos, placePos;
+        List<ARRaycastHit> hits = new List<ARRaycastHit>();
         
-        if (Input.touchCount > 0) {
+        // SHOULD WE POSITION THE PLACEHOLDER ?
+        placePos = camera.ViewportToScreenPoint(new Vector3(0.5f, 0.5f, 0));
+        ray = camera.ScreenPointToRay(placePos);
 
-            touch = Input.GetTouch(0);
-            
-            if (touch.phase == TouchPhase.Began) {
+        if (raycastManager.Raycast(placePos, hits)) {
+            raycastPos = ray.GetPoint(hits[0].distance);
+             // We want to position it underneath the plane
+            if (activePlaceholder) {
+                Debug.Log("WE SHOULD MOVE THE PLACEHOLDER");
+                activePlaceholder.transform.position = raycastPos;
+            } else {
+                Debug.Log("WE SHOULD CREATE THE PLACEHOLDER");
+                activePlaceholder = Instantiate(placeholder, raycastPos, Quaternion.identity);
+            }
 
-                ray = camera.ScreenPointToRay(touch.position);
-            
-                if (Physics.Raycast(ray, out hit)) {
-                    raycastPos = ray.GetPoint(hit.distance);
-                    /* cubeObj = GameObject.CreatePrimitive(PrimitiveType.Cube); */
-                    /* // Scale of (0.2, 0.2, 0.2) */
-                    /* cubeObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f); */
+            // PLACING CUBES
+            if (Input.touchCount > 0) {
 
-                    /* /1* // Add Rigidbody with gravity enabled *1/ */ 
-                    /* rigidBody = cubeObj.AddComponent<Rigidbody>(); */
-                    /* rigidBody.useGravity = true; */
+                touch = Input.GetTouch(0);
+                
+                if (touch.phase == TouchPhase.Began) {
                     
-                    // We have to add an offset
-                    raycastPos.y += 2;
-
-                    /* Instantiate(cubeObj, raycastPos, Quaternion.identity); */
                     Instantiate(realCube, raycastPos, Quaternion.identity);
+                    
+                    /* ray = camera.ScreenPointToRay(touch.position); */
+                    
+                    /* if (raycastManager.Raycast(touch.position, hits)) { */
+                    /*     raycastPos = ray.GetPoint(hits[0].distance); */
+                        
+                    /*     // We have to add an offset */
+                    /*     /1* raycastPos.y += 2; *1/ */
+
+                    /*     Instantiate(realCube, raycastPos, Quaternion.identity); */
+                    /* } */
                 }
             }
+        } else if (activePlaceholder) {
+            Destroy(activePlaceholder);
         }
+
     }
 }
