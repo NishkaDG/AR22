@@ -1,34 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
-public class NewBehaviourScript : MonoBehaviour
+public class RealObjectAdder : MonoBehaviour
 {
-	[SerializeField]
-	public GameObject cubeToDrop;
-	// Start is called before the first frame update
+    
+    [SerializeField]
+    ARRaycastManager m_RaycastManager;
+
+    [SerializeField] 
+    private GameObject cubePrefab;
+    
+    [SerializeField] 
+    private Transform parent;
+    
     void Start()
     {
-        
+        Debug.Log("Hello World");
     }
 
     // Update is called once per frame
     void Update()
     {
-		Ray myRay;
-		RaycastHit hit;
-		Touch touch;
-		for(int i = 0; i < Input.touchCount; i++) {
-			touch = Input.GetTouch(i);
-			if (touch.phase.Equals(TouchPhase.Began)) {
-				myRay = Camera.main.ScreenPointToRay(touch.position);
-				if(Physics.Raycast(myRay, out hit)) {
-					//Vector3 dropPoint = hit.point + new Vector3(0, 0.1f, 0);
-					Vector3 dropPoint = myRay.GetPoint(hit.distance);
-					GameObject newCube = Instantiate(cubeToDrop, dropPoint, Quaternion.identity);
-				}
-			}
-		}
-        
+        if (Input.touchCount > 0) {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase != TouchPhase.Began)
+            {
+                return;
+            }
+            List<ARRaycastHit> m_Hits = new List<ARRaycastHit>();
+            if (m_RaycastManager.Raycast(Input.GetTouch(0).position, m_Hits))
+            {
+                var hit = m_Hits[0];
+                if (hit.trackable is ARPlane plane)
+                {
+                    Debug.Log($"Hit a plane");
+                    Vector3 point = hit.pose.position;
+                    var thing = Instantiate(cubePrefab, point, new Quaternion(), parent);
+                }
+                // Do something with the object that was hit by the raycast.
+            }
+        }
     }
 }
