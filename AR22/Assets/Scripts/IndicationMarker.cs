@@ -12,6 +12,8 @@ public class IndicationMarker : MonoBehaviour
     [SerializeField]
     ARRaycastManager m_RaycastManager;
     
+    private bool markerEnabled = false;
+    
     [SerializeField] 
     private Transform parent;
     // Start is called before the first frame update
@@ -27,6 +29,10 @@ public class IndicationMarker : MonoBehaviour
         
         var markerRenderer = marker.GetComponent<Renderer>();
         markerRenderer.enabled = false;
+        if (!markerEnabled)
+        {
+            return;
+        }
         var centerOfScreen = Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f, 0));
         List<ARRaycastHit> m_Hits = new List<ARRaycastHit>();
         if (m_RaycastManager.Raycast(centerOfScreen, m_Hits))
@@ -41,6 +47,16 @@ public class IndicationMarker : MonoBehaviour
                 marker.transform.localRotation = hit.pose.rotation;
             }
         }
+    }
+
+    public void enable()
+    {
+        markerEnabled = true;
+    }
+
+    public void disable()
+    {
+        markerEnabled = false;
     }
     
 }
