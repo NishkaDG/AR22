@@ -152,8 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb59c12a473747c18305c2371d125b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 2032274850}
-  prefab: {fileID: 2269308473524462439, guid: c30b73e973c1f4d27893c3f29cf7684e, type: 3}
+  realCube: {fileID: 2269308473524462439, guid: c30b73e973c1f4d27893c3f29cf7684e, type: 3}
 --- !u!4 &102953860
 Transform:
   m_ObjectHideFlags: 0
@@ -395,7 +394,7 @@ GameObject:
   - component: {fileID: 2032274851}
   m_Layer: 0
   m_Name: AR Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

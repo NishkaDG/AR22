@@ -5,11 +5,10 @@ using UnityEngine;
 public class RealObjectAdder : MonoBehaviour
 {
     
-    [SerializeField]
     Camera camera;
 
     [SerializeField]
-    GameObject prefab;
+    GameObject realCube;
     
     // GameObject we are going to create 
     // and its Rigidbody
@@ -17,7 +16,9 @@ public class RealObjectAdder : MonoBehaviour
     Rigidbody rigidBody;
     
     // Start is called before the first frame update
-    void Start() { }
+    void Start() {
+        camera = Camera.main;
+    }
 
     // Update is called once per frame
     void Update()
@@ -53,7 +54,7 @@ public class RealObjectAdder : MonoBehaviour
                     raycastPos.y += 2;
 
                     /* Instantiate(cubeObj, raycastPos, Quaternion.identity); */
-                    Instantiate(prefab, raycastPos, Quaternion.identity);
+                    Instantiate(realCube, raycastPos, Quaternion.identity);
                 }
             }
         }
