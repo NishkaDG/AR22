@@ -9,7 +9,7 @@ public class RealObjectAdder : MonoBehaviour
     Camera camera;
 
     [SerializeField]
-    GameObject realCube;
+    GameObject prefab;
     
     [SerializeField]
     GameObject placeholder;
@@ -33,7 +33,7 @@ public class RealObjectAdder : MonoBehaviour
     
     public void AddCube() {
         if (activePlaceholder) {
-            Instantiate(realCube, raycastPos, Quaternion.identity);
+            Instantiate(prefab, raycastPos, Quaternion.identity);
         }
     }
 
