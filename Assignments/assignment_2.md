@@ -46,10 +46,10 @@ Explain the difference between the two different raycast functions (Unity's buil
 - If you want to use gravity in your project, how can you change the design of the debug planes to look nicer?]
 
 In this exercise, we began to use the AR Foundation raycast. This initially caused our cubes to fall through the ground. 
-The gravity feature of the cube prefab was enabled. Further, within the RigidBody feature, collision detection was set to discrete, i.e, at specific
+The gravity feature of the cube prefab was enabled. Further, within the rigidbody feature, collision detection was set to discrete, i.e, at specific
 discrete time intervals, the object would move a fixed number of units, according to the force applied on it (in this case, gravity). This meant that
 the game may not be able to detect the collision at all since the cube only changed position directly without passing through intermediate points (the
-ground). On changing the parameters of the prefab to enable Kinematic (?), the object no longer falls through the ground.
+ground). On disabling rigidbody, the object no longer falls through the ground.
 
 Now, on adding an object on top of the current object, the new object simply applies just in front of the old object. 
 
