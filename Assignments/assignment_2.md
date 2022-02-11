@@ -20,13 +20,17 @@ made different degrees of progress. On Friday we decided to split the remaining 
 report.
 
 ### <ins>Exercise 1.2</ins>
-[Explain what you see in the application. What are being tracked in the physical world?]
+The application shows approximate planes being tracked in the physical world, e.g a bed or a windowsill. In low light conditions it does not do
+well with planes that are close to the camera, e.g the laptop keyboard a few inches away. On occasion the application will appear to track planes
+where none exist, e.g in mid-air.
 
 ### <ins>Exercise 2.1</ins>
 [Explain: what is the size of your object in the physical world? How does unity's units relate to real world units?
 
 
 Explain: what happens if you insert a cube on top of a cube?]
+
+
 
 ### <ins>Exercise 2.2</ins>
 [Explain why your objects fall through the ground.
