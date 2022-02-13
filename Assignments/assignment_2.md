@@ -66,30 +66,13 @@ void Update()
 
 Using the library's raycast function we observe that now new objects do appear, but they fall through the ground. This is due to the objects having gravity enabled and not being another object (with a collider) to stop them from falling (that was the function of the `AR Default Plane`). An example of the cubes endlessly falling can be seen below.
 
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true">
-    <source src="media/assignment_2/ex2.2-fall-through-processed.mp4" type="video/mp4">
-  </video>
-</figure>
+![img](media/assignment_2/ex2.2-fall-through-processed.gif)
 
 To fix this we remove gravity from the prefab's *Rigidbody*. This is the result: 
 
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true">
-    <source src="media/assignment_2/ex2.2-collide-wout-gravity-processed.mp4" type="video/mp4">
-  </video>
-</figure>
+![img](media/assignment_2/ex2.2-collide-wout-gravity-processed.gif)
 
 Since the exercise did not specify whether the object's *Collider* had to be removed or not, we decided not to remove it. That's why the objects repel each other when positioned in the same coodinates.
-
-Explain the difference between the two different raycast functions (Unity's build-in and AR Foundation's)?
-- When will you use each function?
-- Can you combine them in a meaningful way?
-- If you want to use gravity in your project, how can you change the design of the debug planes to look nicer?]
-
-In this exercise, we began to use the AR Foundation raycast. This initially caused our cubes to fall through the ground. The gravity feature of the cube prefab was enabled. Further, within the rigidbody feature, collision detection was set to discrete, i.e, at specific discrete time intervals, the object would move a fixed number of units, according to the force applied on it (in this case, gravity). This meant that the game may not be able to detect the collision at all since the cube only changed position directly without passing through intermediate points (the ground). On disabling rigidbody, the object no longer fall through the ground.
-
-Now, on adding an object on top of the current object, the new object simply applies just in front of the old object. 
 
 The Unity built-in raycast function tracks objects in the physical world, whereas AR Foundation's raycast tracks trackable AR objects that may not exist in the physical world.
 
@@ -127,22 +110,14 @@ void Update()
 
 Since the indication marker has to be tied to the center of the screen we change it's position if the object has already been instantiated (we track this with the `activePlaceholder` variable). An example of this behaviour can be seen below.
 
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true">
-    <source src="media/assignment_2/ex2.3-indicator-processed.mp4" type="video/mp4">
-  </video>
-</figure>
+![img](media/assignment_2/ex2.3-indicator-processed.gif)
 
 ### <ins>Exercise 2.4</ins>
 We added a UI Button, and positioned it in the bottom of the screen using the button anchor. To make the button do something, we need to drag the appropriate object (containing the script we want to use) into the inspector pane of the button, and select the appropriate function to call. The function must be public. 
 
 This is what it looks like (after fiddling a bit with the button's position).
 
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true">
-    <source src="media/assignment_2/ex2.4-button-processed.mp4" type="video/mp4">
-  </video>
-</figure>
+![img](media/assignment_2/ex2.4-button-processed.gif)
 
 We decided that the indication marker should only be visible while the user is actively placing an item i.e. After they have pressed the button. After the user has placed the item, the indication marker disappears again. Note: The video is from an earlier iteration where the button directly added the object. 
 
@@ -150,11 +125,7 @@ We decided that the indication marker should only be visible while the user is a
 Since our group hasn't settled for an idea yet, we decided to choose a [random 3D model from the Unity Store](https://assetstore.unity.com/packages/3d/props/bowling-kegel-ball-67371). For the example we will use the AR raycast function since the pins will be placed on top of the "real" floor.
 
 An example can be seen below:
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true">
-    <source src="media/assignment_2/ex2.5-meaningful-objs-processed.mp4" type="video/mp4">
-  </video>
-</figure>
+![img](media/assignment_2/ex2.5-meaningful-objs-processed.gif)
 
 ### <ins>Exercise 3.1</ins>
 Now, our goal is to track predefined images. To achieve that we create a library of target images, a `ReferenceImageLibrary`. For this example we have chosen to take photos of two objects (a book and a brochure) that had enough keypoints to be considered good refence images.
@@ -195,11 +166,7 @@ For the test, we decided to change the scale of the book and keep the original s
 
 The end result can be seen here:
 
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true">
-    <source src="media/assignment_2/ex3.2-diff-scales-ref-imgs-processed.mp4" type="video/mp4">
-  </video>
-</figure>
+![img](media/assignment_2/ex3.2-diff-scales-ref-imgs-processed.gif)
 
 Due to the book being registered as twice the size as it really is, Unity thinks the book is further than it really is. That is why the meaningful object appears smaller when compared to the one displayed on top of the brochure.
 
