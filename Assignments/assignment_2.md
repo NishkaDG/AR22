@@ -132,15 +132,17 @@ Since the indication marker has to be tied to the center of the screen we change
 </figure>
 
 ### <ins>Exercise 2.4</ins>
-Luckily for us the functionality that is required for this exercise has been already implemented. We only need to move some code around. For this exercise, we move our `Instantiate` call inside of a function called `AddCube`.
+We added a UI Button, and positioned it in the bottom of the screen using the button anchor. To make the button do something, we need to drag the appropriate object (containing the script we want to use) into the inspector pane of the button, and select the appropriate function to call. The function must be public. 
 
-Then select the `AddCube` function in the inspector pane of the button we just added to our scene. This is what it looks like (after fiddling a bit with the button's position).
+This is what it looks like (after fiddling a bit with the button's position).
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true">
     <source src="media/assignment_2/ex2.4-button-processed.mp4" type="video/mp4">
   </video>
 </figure>
+
+We decided that the indication marker should only be visible while the user is actively placing an item i.e. After they have pressed the button. After the user has placed the item, the indication marker disappears again. 
 
 ### <ins>Exercise 2.5</ins>
 Since our group hasn't settled for an idea yet, we decided to choose a [random 3D model from the Unity Store](https://assetstore.unity.com/packages/3d/props/bowling-kegel-ball-67371). For the example we will use the AR raycast function since the pins will be placed on top of the "real" floor.
