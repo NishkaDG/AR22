@@ -74,8 +74,9 @@ To fix this we remove gravity from the prefab's *Rigidbody*. This is the result:
 
 Since the exercise did not specify whether the object's *Collider* had to be removed or not, we decided not to remove it. That's why the objects repel each other when positioned in the same coodinates.
 
-The Unity built-in raycast function tracks objects in the physical world, whereas AR Foundation's raycast tracks trackable AR objects that may not exist in the physical world.
+The Unity built-in raycast function can only hit objects in the digital world, whereas AR Foundation's raycast can only hit physical items in the real world. If you want to both be able to place items on the ground and on top of already placed items, you will need to use both raycasts. 
 
+If we wanted to be able to have physics/gravity in our project, but without the objects falling through the ground. We would need to use the debug planes with a collider. The debug planes are of course not very pretty, but you could for example remove their renderer, so they are not even visible. 
 
 
 ### <ins>Exercise 2.3</ins>
