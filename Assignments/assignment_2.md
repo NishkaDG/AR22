@@ -87,16 +87,11 @@ Explain the difference between the two different raycast functions (Unity's buil
 - Can you combine them in a meaningful way?
 - If you want to use gravity in your project, how can you change the design of the debug planes to look nicer?]
 
-In this exercise, we began to use the AR Foundation raycast. This initially caused our cubes to fall through the ground. 
-The gravity feature of the cube prefab was enabled. Further, within the rigidbody feature, collision detection was set to discrete, i.e, at specific
-discrete time intervals, the object would move a fixed number of units, according to the force applied on it (in this case, gravity). This meant that
-the game may not be able to detect the collision at all since the cube only changed position directly without passing through intermediate points (the
-ground). On disabling rigidbody, the object no longer fall through the ground.
+In this exercise, we began to use the AR Foundation raycast. This initially caused our cubes to fall through the ground. The gravity feature of the cube prefab was enabled. Further, within the rigidbody feature, collision detection was set to discrete, i.e, at specific discrete time intervals, the object would move a fixed number of units, according to the force applied on it (in this case, gravity). This meant that the game may not be able to detect the collision at all since the cube only changed position directly without passing through intermediate points (the ground). On disabling rigidbody, the object no longer fall through the ground.
 
 Now, on adding an object on top of the current object, the new object simply applies just in front of the old object. 
 
-The Unity built-in raycast function tracks objects in the physical world, whereas AR Foundation's raycast tracks trackable AR objects that may not
-exist in the physical world.
+The Unity built-in raycast function tracks objects in the physical world, whereas AR Foundation's raycast tracks trackable AR objects that may not exist in the physical world.
 
 ### <ins>Exercise 2.3</ins>
 Once a texture for the indication marker was found, we added it to the textures folder.
@@ -128,7 +123,7 @@ void Update()
 }
 ```
 
-Since the indication marker has to be tied to the center of the screen, we change it's position if the object has already been instantiated (we track this with the `activePlaceholder` variable).
+Since the indication marker has to be tied to the center of the screen we change it's position if the object has already been instantiated (we track this with the `activePlaceholder` variable). An example of this behaviour can be seen below.
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true">
@@ -137,6 +132,10 @@ Since the indication marker has to be tied to the center of the screen, we chang
 </figure>
 
 ### <ins>Exercise 2.4</ins>
+Luckily for us the functionality that is required for this exercise has been already implemented. We only need to move some code around. For this exercise, we move our `Instantiate` call inside of a function called `AddCube`.
+
+Then select the `AddCube` function in the inspector pane of the button we just added to our scene. This is what it looks like (after fiddling a bit with the button's position).
+
 <figure class="video_container">
   <video controls="true" allowfullscreen="true">
     <source src="media/assignment_2/ex2.4-button-processed.mp4" type="video/mp4">
