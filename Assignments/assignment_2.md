@@ -93,6 +93,8 @@ Now, on adding an object on top of the current object, the new object simply app
 
 The Unity built-in raycast function tracks objects in the physical world, whereas AR Foundation's raycast tracks trackable AR objects that may not exist in the physical world.
 
+
+
 ### <ins>Exercise 2.3</ins>
 Once a texture for the indication marker was found, we added it to the textures folder.
 
@@ -142,7 +144,7 @@ This is what it looks like (after fiddling a bit with the button's position).
   </video>
 </figure>
 
-We decided that the indication marker should only be visible while the user is actively placing an item i.e. After they have pressed the button. After the user has placed the item, the indication marker disappears again. 
+We decided that the indication marker should only be visible while the user is actively placing an item i.e. After they have pressed the button. After the user has placed the item, the indication marker disappears again. Note: The video is from an earlier iteration where the button directly added the object. 
 
 ### <ins>Exercise 2.5</ins>
 Since our group hasn't settled for an idea yet, we decided to choose a [random 3D model from the Unity Store](https://assetstore.unity.com/packages/3d/props/bowling-kegel-ball-67371). For the example we will use the AR raycast function since the pins will be placed on top of the "real" floor.
