@@ -1,6 +1,6 @@
 # Assignment 2 - AR Foundation basics (ungraded)
 
-**Date**: 11/02/2022
+**Date**: 13/02/2022
 
 **Group members participating**: Rasmus Thorsøe, Sam Martin Vargas Giagnocavo, Nishka Dasgupta
 
@@ -35,23 +35,10 @@ in the physical world.
 When we enter a cube at the same position as an existing cube, the cubes explosively repel each other and are flung to different corners of the space.
 
 ### <ins>Exercise 2.2</ins>
-[Explain why your objects fall through the ground.
+In this exercise, we began to use the AR Foundation raycast. Our cube prefabs had gravity enabled and we did not have any other colliders set. 
+This initially caused our cubes to fall through the ground. On disabling gravity within rigidbody, the cube no longer falls to the ground.
 
-Try to place an object on top of another object. Explain what happens and why?
-
-
-Explain the difference between the two different raycast functions (Unity's build-in and AR Foundation's)?
-- When will you use each function?
-- Can you combine them in a meaningful way?
-- If you want to use gravity in your project, how can you change the design of the debug planes to look nicer?]
-
-In this exercise, we began to use the AR Foundation raycast. This initially caused our cubes to fall through the ground. 
-The gravity feature of the cube prefab was enabled. Further, within the rigidbody feature, collision detection was set to discrete, i.e, at specific
-discrete time intervals, the object would move a fixed number of units, according to the force applied on it (in this case, gravity). This meant that
-the game may not be able to detect the collision at all since the cube only changed position directly without passing through intermediate points (the
-ground). On disabling rigidbody, the object no longer falls through the ground.
-
-Now, on adding an object on top of the current object, the new object simply applies just in front of the old object. 
+Now, on adding an object on top of the current object, the two objects still collide and repel each other. 
 
 The Unity built-in raycast function tracks objects in the physical world, whereas AR Foundation's raycast tracks trackable AR objects that may not
 exist in the physical world.
