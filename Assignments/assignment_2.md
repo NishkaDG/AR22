@@ -25,19 +25,13 @@ After building the application as a phone app, it shows approximate planes being
 ### <ins>Exercise 2.1</ins>
 For this exercise we created a cube object with the given parameters (side length 0.2, rigidbody with gravity enabled). We then made it a prefab and deleted the object.
 
-To retrieve the camera that we use in the scene we used `Camera.main` (seen below inside the `Start` function) as opossed to what we did in the previous assignment which was select our camera from a `[SerializeField]`.
-
-```c#
-void Start() {
-    camera = Camera.main;
-}
-```
+To retrieve the camera that we use in the scene we used `Camera camera = Camera.main` as opossed to what we did in the previous assignment which was select our camera from a `[SerializeField]`.
 
 The cube object appears to have sides of length slightly less than 30 cm, when compared against various objects in the physical world, both near and far from the camera. As the side of the cube prefab was set to 0.2 units in unity, we can assume that 1 unit in unity corresponds to a little over 1 metre in the physical world.
 
-When we enter a cube at the same position as an existing cube, the cubes explosively repel each other and are flung to different corners of the space.
+Two implementations were made when positioning the cubes. In the first one, no offset is added to the cubes position, so when we enter a cube at the same position as an existing cube, the cubes explosively repel each other and are flung to different corners of the space.
 
-NOTE
+The second, added a small offset to the cubes Y-axis. In this case, the cubes collide as seen in the GIF below.
 
 ![img](media/assignment_2/ex2.1-default-plane-cubes.gif)
 
@@ -97,7 +91,7 @@ In this exercise, we began to use the AR Foundation raycast. This initially caus
 The gravity feature of the cube prefab was enabled. Further, within the rigidbody feature, collision detection was set to discrete, i.e, at specific
 discrete time intervals, the object would move a fixed number of units, according to the force applied on it (in this case, gravity). This meant that
 the game may not be able to detect the collision at all since the cube only changed position directly without passing through intermediate points (the
-ground). On disabling rigidbody, the object no longer falls through the ground.
+ground). On disabling rigidbody, the object no longer fall through the ground.
 
 Now, on adding an object on top of the current object, the new object simply applies just in front of the old object. 
 
@@ -105,6 +99,37 @@ The Unity built-in raycast function tracks objects in the physical world, wherea
 exist in the physical world.
 
 ### <ins>Exercise 2.3</ins>
+Once a texture for the indication marker was found, we added it to the textures folder.
+
+To display the marker every time AR Foundation detects a surface, we trigger a ray for each update. With `ViewportToScreenPoint` we get the position of the center of the screen. We then use that position for the `Raycast` function from `ARRaycastManager`.
+
+```c#
+void Update()
+{
+    
+    Ray ray;
+    List<ARRaycastHit> hits = new List<ARRaycastHit>();
+    
+    // SHOULD WE POSITION THE PLACEHOLDER ?
+    placePos = camera.ViewportToScreenPoint(new Vector3(0.5f, 0.5f, 0));
+    ray = camera.ScreenPointToRay(placePos);
+
+    if (raycastManager.Raycast(placePos, hits)) {
+        raycastPos = ray.GetPoint(hits[0].distance);
+        if (activePlaceholder) {
+            activePlaceholder.transform.position = raycastPos;
+        } else {
+            activePlaceholder = Instantiate(placeholder, raycastPos, Quaternion.identity);
+        }
+    } else if (activePlaceholder) {
+        Destroy(activePlaceholder);
+    }
+
+}
+```
+
+Since the indication marker has to be tied to the center of the screen, we change it's position if the object has already been instantiated (we track this with the `activePlaceholder` variable).
+
 <figure class="video_container">
   <video controls="true" allowfullscreen="true">
     <source src="media/assignment_2/ex2.3-indicator-processed.mp4" type="video/mp4">
