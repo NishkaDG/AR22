@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.XR.ARFoundation;
+
+public class PosterApp1 : MonoBehaviour
+{
+	Camera camera;
+
+    [SerializeField]
+    GameObject prefab;
+    
+    [SerializeField]
+    GameObject placeholder;
+    
+    [SerializeField]
+    Renderer placeholderRenderer;
+    private bool showingPlaceholder = false;
+
+    [SerializeField]
+    ARRaycastManager raycastManager;
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        camera = Camera.main;
+        Debug.Log("test");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
