@@ -16,7 +16,7 @@ public class PosterApp1 : MonoBehaviour
     
     [SerializeField]
     Renderer placeholderRenderer;
-    private bool showingPlaceholder = false;
+    private bool showingPlaceholder = true;
 
     [SerializeField]
     ARRaycastManager raycastManager;
