@@ -8,10 +8,10 @@ public class PosterApp1 : MonoBehaviour
 {
     
     public void DeleteAll() {
-		GameObject[] GameObjects = (FindObjectsOfType<GameObject>() as GameObject[]);
-		for (int i = 0; i < GameObjects.Length; i++)
+		GameObject[] go = GameObject.FindGameObjectsWithTag("art");
+		for (int i = 0; i < go.Length; i++)
 		{
-			Destroy(GameObjects[i]);
+			Destroy(go[i]);
 		}
 	}
 }

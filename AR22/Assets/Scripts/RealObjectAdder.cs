@@ -31,7 +31,8 @@ public class RealObjectAdder : MonoBehaviour
     
     public void AddObject(Vector3 position, Quaternion rotation) {
         if (showingPlaceholder) {
-            Instantiate(prefab, position, rotation);
+            GameObject s1 = Instantiate(prefab, position, rotation);
+			s1.gameObject.tag = "art";
         }
     }
 
