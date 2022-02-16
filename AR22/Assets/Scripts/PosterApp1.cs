@@ -8,9 +8,10 @@ public class PosterApp1 : MonoBehaviour
 {
     
     public void DeleteAll() {
-		var objects = GameObject.FindObjectsOfType(GameObject);
-		for(o : GameObject in objects) {
-			Destroy(o);
+		GameObject[] GameObjects = (FindObjectsOfType<GameObject>() as GameObject[]);
+		for (int i = 0; i < GameObjects.Length; i++)
+		{
+			Destroy(GameObjects[i]);
 		}
 	}
 }
