@@ -6,7 +6,8 @@ using UnityEngine.XR.ARFoundation;
 
 public class PosterApp1 : MonoBehaviour
 {
-	Camera camera;
+    
+    Camera camera;
 
     [SerializeField]
     GameObject prefab;
@@ -16,21 +17,23 @@ public class PosterApp1 : MonoBehaviour
     
     [SerializeField]
     Renderer placeholderRenderer;
-    private bool showingPlaceholder = true;
+    private bool showingPlaceholder = false;
 
     [SerializeField]
     ARRaycastManager raycastManager;
     
+	private List<GameObject> instobj;
+    
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         camera = Camera.main;
         Debug.Log("test");
     }
-	
-	public void AddObject(Vector3 position, Quaternion rotation) {
+    
+    public void AddObject(Vector3 position, Quaternion rotation) {
         if (showingPlaceholder) {
-            Instantiate(prefab, position, rotation);
+            GameObject k = Instantiate(prefab, position, rotation);
+			instobj.Add(k);
         }
     }
 
