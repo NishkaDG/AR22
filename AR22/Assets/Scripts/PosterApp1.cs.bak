@@ -32,7 +32,7 @@ public class PosterApp1 : MonoBehaviour
     
     public void AddObject(Vector3 position, Quaternion rotation) {
         if (showingPlaceholder) {
-            Gameobject k = Instantiate(prefab, position, rotation);
+            GameObject k = Instantiate(prefab, position, rotation);
 			instobj.Add(k);
         }
     }
