@@ -3,6 +3,7 @@
 ## Group
 * Rasmus Thorsøe
 * Sam Martin Vargas Giagnocavo
+* Nishka Dasgupta
 
 <!-- [TODO: cool image of group members - only if you like] -->
 

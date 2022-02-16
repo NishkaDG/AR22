@@ -1,46 +1,79 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.XR.ARFoundation;
 
 public class RealObjectAdder : MonoBehaviour
 {
     
-    [SerializeField]
-    ARRaycastManager m_RaycastManager;
+    Camera camera;
 
-    [SerializeField] 
-    private GameObject cubePrefab;
+    [SerializeField]
+    GameObject prefab;
     
-    [SerializeField] 
-    private Transform parent;
+    [SerializeField]
+    GameObject placeholder;
     
-    void Start()
+    [SerializeField]
+    Renderer placeholderRenderer;
+    private bool showingPlaceholder = false;
+
+    [SerializeField]
+    ARRaycastManager raycastManager;
+    
+    
+    // Start is called before the first frame update
+    void Start() {
+        camera = Camera.main;
+        Debug.Log("test");
+    }
+    
+    public void AddObject(Vector3 position, Quaternion rotation) {
+        if (showingPlaceholder) {
+            Instantiate(prefab, position, rotation);
+        }
+    }
+
+    public void ShowPlaceholder()
     {
-        Debug.Log("Hello World");
+        showingPlaceholder = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount > 0) {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase != TouchPhase.Began)
+        if (!showingPlaceholder)
+        {
+            placeholderRenderer.enabled = false;
+            return;
+        }
+        
+        List<ARRaycastHit> hits = new List<ARRaycastHit>();
+        // Move the placeholder
+        var placeHolderPosition = camera.ViewportToScreenPoint(new Vector3(0.5f, 0.5f, 0));
+
+        if (raycastManager.Raycast(placeHolderPosition, hits)) {
+            var hit = hits[0];
+            if (hit.trackable is ARPlane plane)
             {
-                return;
+                placeholderRenderer.enabled = true;
+                placeholder.transform.position = hit.pose.position;
+                placeholder.transform.rotation = hit.pose.rotation;
             }
-            List<ARRaycastHit> m_Hits = new List<ARRaycastHit>();
-            if (m_RaycastManager.Raycast(Input.GetTouch(0).position, m_Hits))
-            {
-                var hit = m_Hits[0];
-                if (hit.trackable is ARPlane plane)
+            
+            // check for input to place object
+            if (Input.touchCount > 0) {
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase != TouchPhase.Began)
                 {
-                    Debug.Log($"Hit a plane");
-                    Vector3 point = hit.pose.position;
-                    var thing = Instantiate(cubePrefab, point, new Quaternion(), parent);
+                    return;
                 }
-                // Do something with the object that was hit by the raycast.
+                AddObject(placeholder.transform.position, placeholder.transform.rotation);
+                showingPlaceholder = false;
             }
+        } else {
+            placeholderRenderer.enabled = false;
         }
     }
 }
