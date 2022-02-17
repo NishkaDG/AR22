@@ -21,7 +21,7 @@ public class RealObjectAdder : MonoBehaviour
     ARRaycastManager raycastManager;
 
     [SerializeField] 
-    private ButtonHandler callback;
+    private State callback;
 
 
     // Start is called before the first frame update

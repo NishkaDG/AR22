@@ -266,10 +266,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 102953860}
-  - component: {fileID: 102953862}
   - component: {fileID: 102953859}
   - component: {fileID: 102953861}
   - component: {fileID: 102953863}
+  - component: {fileID: 102953862}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -293,7 +293,7 @@ MonoBehaviour:
   placeholder: {fileID: 761191117}
   placeholderRenderer: {fileID: 465537145}
   raycastManager: {fileID: 1253257732}
-  callback: {fileID: 102953862}
+  callback: {fileID: 0}
 --- !u!4 &102953860
 Transform:
   m_ObjectHideFlags: 0
@@ -348,6 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d7348120e398746ac59b9b967428c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionIndicator: {fileID: 2029730492423400962, guid: a19b22b8402db944ea85db408c025bd7, type: 3}
 --- !u!23 &465537145 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 5893471435063232824, guid: 23799ccb9f7814e82a959b16c7860630, type: 3}
@@ -564,7 +565,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 102953862}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
         m_MethodName: DeleteButton
         m_Mode: 1
@@ -1239,7 +1240,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 102953862}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
         m_MethodName: AddObjectButton
         m_Mode: 1

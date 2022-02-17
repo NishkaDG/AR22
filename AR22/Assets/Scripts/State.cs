@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-public class ButtonHandler : MonoBehaviour
+public class State : MonoBehaviour
 {
     
     [SerializeField]
