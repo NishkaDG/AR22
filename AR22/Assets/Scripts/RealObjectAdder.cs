@@ -1,7 +1,6 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.XR.ARFoundation;
 
 public class RealObjectAdder : MonoBehaviour
@@ -17,12 +16,14 @@ public class RealObjectAdder : MonoBehaviour
     
     [SerializeField]
     Renderer placeholderRenderer;
-    private bool showingPlaceholder = false;
 
     [SerializeField]
     ARRaycastManager raycastManager;
-    
-    
+
+    [SerializeField] 
+    private ButtonHandler callback;
+
+
     // Start is called before the first frame update
     void Start() {
         camera = Camera.main;
@@ -30,26 +31,15 @@ public class RealObjectAdder : MonoBehaviour
     }
     
     public void AddObject(Vector3 position, Quaternion rotation) {
-        if (showingPlaceholder) {
+        if (placeholderRenderer.enabled) {
             GameObject s1 = Instantiate(prefab, position, rotation);
 			s1.tag = "art";
         }
     }
 
-    public void ShowPlaceholder()
-    {
-        showingPlaceholder = true;
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (!showingPlaceholder)
-        {
-            placeholderRenderer.enabled = false;
-            return;
-        }
-        
         List<ARRaycastHit> hits = new List<ARRaycastHit>();
         // Move the placeholder
         var placeHolderPosition = camera.ViewportToScreenPoint(new Vector3(0.5f, 0.5f, 0));
@@ -71,7 +61,8 @@ public class RealObjectAdder : MonoBehaviour
                     return;
                 }
                 AddObject(placeholder.transform.position, placeholder.transform.rotation);
-                showingPlaceholder = false;
+                callback.FinishedAdding();
+                placeholderRenderer.enabled = false;
             }
         } else {
             placeholderRenderer.enabled = false;

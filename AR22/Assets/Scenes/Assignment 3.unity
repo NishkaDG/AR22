@@ -266,9 +266,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 102953860}
+  - component: {fileID: 102953862}
   - component: {fileID: 102953859}
   - component: {fileID: 102953861}
-  - component: {fileID: 102953862}
+  - component: {fileID: 102953863}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -288,10 +289,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb59c12a473747c18305c2371d125b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 139516, guid: 4246925f0393c430189bb4ceba36dc8a, type: 3}
+  prefab: {fileID: 215099684268678603, guid: 3377934bc7336924cabdd41af7736d8b, type: 3}
   placeholder: {fileID: 761191117}
   placeholderRenderer: {fileID: 465537145}
   raycastManager: {fileID: 1253257732}
+  callback: {fileID: 102953862}
 --- !u!4 &102953860
 Transform:
   m_ObjectHideFlags: 0
@@ -329,7 +331,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 102953858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8c73fc9d62a7f45960ed98f1a63de2, type: 3}
+  m_Script: {fileID: 11500000, guid: e41e518b70eb4befbcafef9bd7abc348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  adder: {fileID: 102953859}
+  interactor: {fileID: 102953863}
+--- !u!114 &102953863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102953858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d7348120e398746ac59b9b967428c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!23 &465537145 stripped
@@ -549,8 +565,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 102953862}
-        m_TargetAssemblyTypeName: PosterApp1, Assembly-CSharp
-        m_MethodName: DeleteAll
+        m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
+        m_MethodName: DeleteButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1223,9 +1239,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 102953859}
-        m_TargetAssemblyTypeName: RealObjectAdder, Assembly-CSharp
-        m_MethodName: ShowPlaceholder
+      - m_Target: {fileID: 102953862}
+        m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
+        m_MethodName: AddObjectButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
