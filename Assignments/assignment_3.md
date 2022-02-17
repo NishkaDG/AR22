@@ -18,14 +18,16 @@ The plan was for Nishka to do exercise 1, creating the intial scene, indication 
 
 
 
-### <ins>Exercise 2.1</ins>
+### <ins>Exercise 2</ins>
 For this exercise we started with a bit of a refactoring, this makes it easier to handle was is effectively 2 different states of our application: The "adding" state and the "interact" state. To model this we split up the intended functionality into 3 parts: The "State" class would be responsible for knowing which state we are in, and enabling/disabling the other 2 classes based on the state. The "RealObjectAdder" class would be responsible for the "adding" state and the "RealObjectInteracter" class would be responsible for the "interact" state. 
 
 The default state is the "interact" state, if the "Add object" button is clicked, the "adding" state will be entered. 
 
-In the "interact" state, when a user presses an object, the object is highlighted in red. This is done using a red plane, which is added as a child to the object. The red plane is then scaled to be slightly bigger than the object and slightly behind the object. 
+In the "interact" state, when a user presses an object the object is selected and highlighted in red. The highlighting done using a red plane, which is added as a child to the object. The red plane is then scaled to be slightly bigger than the object and slightly behind the object. The user can deselect the object by pressing it again, or by selecting another object. 
 
 ![img](media/assignment_3/red_highlight.jpg)
+
+To let the user delete the selected object, we SetActive(true) on the "Delete" button whenever the user has selected an object. When the user deselects or deletes the object, we SetActive(false) on "Delete" button. 
 
 
 ## Conclusion
