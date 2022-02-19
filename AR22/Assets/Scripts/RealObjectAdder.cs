@@ -15,6 +15,7 @@ public class RealObjectAdder : MonoBehaviour
     
     private bool hasMoved;
     private bool checkForMovement;
+    private Vector2[] lastTwoFingerPosition;
 
     private Material materialToAdd;
     private GameObject selectedObject;
@@ -41,6 +42,8 @@ public class RealObjectAdder : MonoBehaviour
         this.materialToAdd = null;
         this.showingPlaceholder = false;
         this.placeholderRenderer.enabled = false;
+        
+        this.lastTwoFingerPosition = null;
         
         // Button textures
         this.placeItemButton.interactable = false;
@@ -95,6 +98,10 @@ public class RealObjectAdder : MonoBehaviour
         this.deleteAllButton.interactable = false;
         this.deleteItemButton.interactable = false;
     }
+
+    private float CalcSlope(Vector2 v1, Vector2 v2) {
+        return (v2.y - v1.y) / (v2.x - v1.x);
+    }
     
     void UpdatePlaceholder() {
   
@@ -119,12 +126,13 @@ public class RealObjectAdder : MonoBehaviour
         Ray ray;
         RaycastHit hit;
         Touch[] touches;
-		Vector2 currentPosition = transform.position;
+        Vector2[] currTwoFingerPosition;
 
         touches = Input.touches;
 
         if (touches.Length == 1 && touches[0].phase == TouchPhase.Began) {
             this.hasMoved = false;
+            this.lastTwoFingerPosition = null;
             
             Debug.Log("Touch has been registered");
 
@@ -180,28 +188,29 @@ public class RealObjectAdder : MonoBehaviour
                 this.selectedObject = null;
                 this.deleteItemButton.interactable = false;
             }
+            
+            this.lastTwoFingerPosition = null;
             this.checkForMovement = this.hasMoved = false;
         }
-		if (touches.Length == 2 && this.checkForMovement && touches[0].phase == TouchPhase.Ended) {
-			// Rotate object
-            if (this.hasMoved) {
-                //Debug.Log("CHECKING IF A PLANE IS ON THE WAY OF MOVING");
-				//transform.Rotate( 5.0f * Time.deltaTime, ySpeed * Time.deltaTime, zSpeed * Time.deltaTime);
-                float turnSpeed = 5;
-				Vector2 moveTowards = Camera.main.ScreenToWorldPoint(touches[0].position);
-				Vector2 movement = moveTowards - currentPosition;
-				movement.Normalize();
-				float targetAngle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
-				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle), turnSpeed * Time.deltaTime);
-            // No movement was done, thus we deselect the object.
-            } else {
-                Debug.Log("Selected object should be deselected");
-				this.selectedObject.GetComponent<Renderer>().material.color = Color.white;
-                this.selectedObject = null;
-                this.deleteItemButton.interactable = false;
-            }
+
+        // Two fingers are moving
+		if (touches.Length == 2 && touches[0].phase == TouchPhase.Moved && touches[1].phase == TouchPhase.Moved) {
             
-			
+            currTwoFingerPosition = new Vector2[] {touches[0].position, touches[1].position};
+            
+            if (this.lastTwoFingerPosition != null) {
+                
+                float slope_1 = CalcSlope(this.lastTwoFingerPosition[0], this.lastTwoFingerPosition[1]);
+                float slope_2 = CalcSlope(currTwoFingerPosition[0], currTwoFingerPosition[1]);
+                
+                float angle = (slope_2 - slope_1) / (1 + slope_1 * slope_2);            
+                float inv = (float) Math.Atan(angle);
+                float degrees = (float) ((inv * 180) / Math.PI);
+
+                this.selectedObject.transform.Rotate(0.0f, -1.0f * degrees, 0.0f, Space.Self);
+            }
+
+            this.lastTwoFingerPosition = currTwoFingerPosition;
 		}
     }
 
