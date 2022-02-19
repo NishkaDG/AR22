@@ -185,14 +185,14 @@ public class RealObjectAdder : MonoBehaviour
 		if (touches.Length == 2 && this.checkForMovement && touches[0].phase == TouchPhase.Ended) {
 			// Rotate object
             if (this.hasMoved) {
-                Debug.Log("CHECKING IF A PLANE IS ON THE WAY OF MOVING");
-				transform.Rotate( 5.0f * Time.deltaTime, ySpeed * Time.deltaTime, zSpeed * Time.deltaTime);
-                /*float turnSpeed = 5;
+                //Debug.Log("CHECKING IF A PLANE IS ON THE WAY OF MOVING");
+				//transform.Rotate( 5.0f * Time.deltaTime, ySpeed * Time.deltaTime, zSpeed * Time.deltaTime);
+                float turnSpeed = 5;
 				Vector2 moveTowards = Camera.main.ScreenToWorldPoint(touches[0].position);
 				Vector2 movement = moveTowards - currentPosition;
 				movement.Normalize();
 				float targetAngle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
-				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle), turnSpeed * Time.deltaTime);*/
+				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle), turnSpeed * Time.deltaTime);
             // No movement was done, thus we deselect the object.
             } else {
                 Debug.Log("Selected object should be deselected");
