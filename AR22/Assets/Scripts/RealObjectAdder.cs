@@ -54,8 +54,10 @@ public class RealObjectAdder : MonoBehaviour
         
         if (this.selectedObject) {
             this.selectedObject.GetComponent<Renderer>().material.color = Color.yellow;
+            Debug.Log("An object has been selected");
             EnableButton(this.deleteItemButton);
         } else {
+            Debug.Log("An object has been deselected");
             DisableButton(this.deleteItemButton);
         }
     }
