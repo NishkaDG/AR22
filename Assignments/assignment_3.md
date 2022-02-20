@@ -33,15 +33,73 @@ A screenshot of the UI can be seen below:
 <img src="media/assignment_3/ui.png" height="450" />
 
 ### <ins>Exercise 2</ins>
-For this exercise we started with a bit of a refactoring, this made it easier to handle what is effectively 2 different states of our application: The "adding" state and the "interact" state. To model this we split up the intended functionality into 3 parts: The "State" class would be responsible for knowing which state we are in, and enabling/disabling the other 2 classes based on the state. The "RealObjectAdder" class would be responsible for the "adding" state and the "RealObjectInteracter" class would be responsible for the "interact" state (e.g showing deletion button when an object is selected).
+For this exercise we extended the functionality of "RealObjectAdder" to support the different buttons our application will have, as well as detect the user's input.
 
-The default state is the "interact" state, if the "Add object" button is clicked, the "adding" state will be entered. 
+To add selection into our program we check for a tap from the user to an unselected object using the `Physics.Raycast` function (if the object is selected then we have to see whether the user intends to move the object or just deselect it). A variable called `selectedObject` is used to track the current selected object.
 
-In the "interact" state, when a user presses an object the object is selected and highlighted in yellow. The highlighting is done using a yellow plane, which is added as a child to the object. The yellow plane is then scaled to be slightly bigger than the object and slightly behind it. The user can deselect the object by pressing it again, or by selecting another object. 
+```c#
+if (touches.Length == 1 && touches[0].phase == TouchPhase.Began) {
+    
+    ray = Camera.main.ScreenPointToRay(touches[0].position);
 
-![img](media/assignment_3/red_highlight.jpg)
+    // Is the finger pointing at something?
+    if (Physics.Raycast(ray, out hit)) {
+        // We have selected the same object.
+        if (this.selectedObject == hit.transform.gameObject) {
+            // Deselect object
+        // We have selected a different object
+        } else {
+            // Select object
+        }
+    } 
 
-To let the user delete the selected object, we SetActive(true) on the "Delete" button whenever the user has selected an object. When the user deselects or deletes the object, we SetActive(false) on "Delete" button. 
+}
+```
+
+In order to add feedback indicating that an object has been selected, we have chosen to change the color of the object's material since it was simpler than what was hinted in the assignment. Some of the buttons are modified to avoid (specifically the delete and delete all buttons) undefined behaviour.
+
+```c#
+private void SelectObject(GameObject obj) {
+    // If there was an old selected object, change its color
+    if (this.selectedObject) {
+        this.selectedObject.GetComponent<Renderer>().material.color = Color.white;
+    }
+    
+    this.selectedObject = obj;
+    
+    if (this.selectedObject) {
+        this.selectedObject.GetComponent<Renderer>().material.color = Color.yellow;
+        Debug.Log("An object has been selected");
+        EnableButton(this.deleteItemButton);
+    } else {
+        Debug.Log("An object has been deselected");
+        DisableButton(this.deleteItemButton);
+    }
+}
+```
+
+As we can see in the aforementioned code, when an object is selected we enable the `Delete Item Button` in the UI. The `EnableButton` function sets the `interactivity` property of the button to `true`. The `OnClick` function of the button itself is binded to the `DeleteSelectedObject` function. Since we use `FindGameObjectsWithTag` throughout our code to locate the objects in the app, we've opted to use `Destroy` to remove objects from our scene instead of `GameObject.SetActive`.
+
+```c#
+public void DeleteSelectedObject() {
+    int numPosters;
+    
+    numPosters = GameObject.FindGameObjectsWithTag("poster").Length;
+    if (this.selectedObject) {
+        Destroy(this.selectedObject);
+        DisableButton(this.deleteItemButton);
+        numPosters -= 1;
+    }
+    
+    // An alternative would be to use DestroyImmediate to get
+    // the correct number of objects within the same function.
+    if (numPosters == 0) {
+        DisableButton(this.deleteAllButton);
+    }
+}
+```
+
+WILL ADD VIDEO HERE.
 
 ### <ins>Exercise 3</ins>
 For this exercise we enable translational and rotational motion of the object. We enable translation when the user selects an object and uses one finger to drag it across the screen. This does not affect any other virtual objects that the selected object is very close to. At all times we check for the existence of a (vertical) plane before moving. 
