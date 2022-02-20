@@ -30,7 +30,7 @@ A dustbin button enables deletion of all objects in the scene. This was implemen
 
 A screenshot of the UI can be seen below:
 
-<img src="media/assignment_3/ui.jpeg" height="450" />
+<img src="media/assignment_3/ui.png" height="450" />
 
 ### <ins>Exercise 2</ins>
 For this exercise we started with a bit of a refactoring, this made it easier to handle what is effectively 2 different states of our application: The "adding" state and the "interact" state. To model this we split up the intended functionality into 3 parts: The "State" class would be responsible for knowing which state we are in, and enabling/disabling the other 2 classes based on the state. The "RealObjectAdder" class would be responsible for the "adding" state and the "RealObjectInteracter" class would be responsible for the "interact" state (e.g showing deletion button when an object is selected).
