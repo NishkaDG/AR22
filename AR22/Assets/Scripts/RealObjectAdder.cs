@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AI;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.EventSystems;
 
 public class RealObjectAdder : MonoBehaviour
 {
@@ -36,28 +36,37 @@ public class RealObjectAdder : MonoBehaviour
     [SerializeField]
     Button deleteAllButton;
     
-    // Start is called before the first frame update
-    void Start() {
-        this.camera = Camera.main;
-        this.materialToAdd = null;
-        this.showingPlaceholder = false;
-        this.placeholderRenderer.enabled = false;
+    private void EnableButton(Button btn) {
+        btn.interactable = true;
+    }
+
+    private void DisableButton(Button btn) {
+        btn.interactable = false;
+    }
+    
+    private void SelectObject(GameObject obj) {
+        // If there was an old selected object, change its color
+        if (this.selectedObject) {
+            this.selectedObject.GetComponent<Renderer>().material.color = Color.white;
+        }
         
-        this.lastTwoFingerPosition = null;
+        this.selectedObject = obj;
         
-        // Button textures
-        this.placeItemButton.interactable = false;
-        this.deleteItemButton.interactable = false;
-        this.deleteAllButton.interactable = false;
+        if (this.selectedObject) {
+            this.selectedObject.GetComponent<Renderer>().material.color = Color.yellow;
+            EnableButton(this.deleteItemButton);
+        } else {
+            DisableButton(this.deleteItemButton);
+        }
     }
 
     public void ChangeObjectToAdd(Material material) {
         if (this.materialToAdd == material) {
             this.materialToAdd = null;
-            placeItemButton.interactable = false;
+            DisableButton(this.placeItemButton);
         } else {
             this.materialToAdd = material;        
-            placeItemButton.interactable = true;
+            EnableButton(this.placeItemButton);
         }
     }
 
@@ -76,14 +85,24 @@ public class RealObjectAdder : MonoBehaviour
             obj.GetComponent<Renderer>().material = this.materialToAdd;
             obj.tag = "poster";
             
-            this.deleteAllButton.interactable = true;
+            EnableButton(this.deleteAllButton);
         }
     }
     
     public void DeleteSelectedObject() {
+        int numPosters;
+        
+        numPosters = GameObject.FindGameObjectsWithTag("poster").Length;
         if (this.selectedObject) {
             Destroy(this.selectedObject);
-            this.deleteItemButton.interactable = false;
+            DisableButton(this.deleteItemButton);
+            numPosters -= 1;
+        }
+        
+        // An alternative would be to use DestroyImmediate to get
+        // the correct number of objects within the same function.
+        if (numPosters == 0) {
+            DisableButton(this.deleteAllButton);
         }
     }
     
@@ -94,9 +113,9 @@ public class RealObjectAdder : MonoBehaviour
             Destroy(obj);
         }
         
-        this.selectedObject = null;
-        this.deleteAllButton.interactable = false;
-        this.deleteItemButton.interactable = false;
+        SelectObject(null);
+        DisableButton(this.deleteAllButton);
+        DisableButton(this.deleteItemButton);
     }
 
     private float CalcSlope(Vector2 v1, Vector2 v2) {
@@ -147,15 +166,7 @@ public class RealObjectAdder : MonoBehaviour
                 // no need to check for movement.
                 } else {
                     this.checkForMovement = false;
-                    
-                    // If there was an old selected object, change its color
-                    if (this.selectedObject) {
-                        this.selectedObject.GetComponent<Renderer>().material.color = Color.white;
-                    }
-                    
-                    this.selectedObject = hit.transform.gameObject;
-                    this.selectedObject.GetComponent<Renderer>().material.color = Color.yellow;
-                    this.deleteItemButton.interactable = true;
+                    SelectObject(hit.transform.gameObject);
                 }
             } 
 
@@ -178,10 +189,7 @@ public class RealObjectAdder : MonoBehaviour
         if (touches.Length == 1 && this.checkForMovement && touches[0].phase == TouchPhase.Ended) {
             // Move object
             if (!this.hasMoved) {
-                this.selectedObject.GetComponent<Renderer>().material.color = Color.white;
-                this.selectedObject = null;
-                this.deleteItemButton.interactable = false;
-            // No movement was done, thus we deselect the object.
+                SelectObject(null);
             }
             
             this.lastTwoFingerPosition = null;
@@ -207,6 +215,21 @@ public class RealObjectAdder : MonoBehaviour
 
             this.lastTwoFingerPosition = currTwoFingerPosition;
 		}
+    }
+    
+    // Start is called before the first frame update
+    void Start() {
+        this.camera = Camera.main;
+        this.materialToAdd = null;
+        this.showingPlaceholder = false;
+        this.placeholderRenderer.enabled = false;
+        
+        this.lastTwoFingerPosition = null;
+        
+        // Buttons
+        DisableButton(this.placeItemButton);
+        DisableButton(this.deleteItemButton);
+        DisableButton(this.deleteAllButton);
     }
 
     // Update is called once per frame
