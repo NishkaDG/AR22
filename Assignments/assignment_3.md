@@ -29,7 +29,8 @@ Our indication marker is the same as in the previous assignment. We now have a c
 A dustbin button enables deletion of all objects in the scene. This was implemented using Unity tags, and deleting GameObjects with the relevant tag. In this case we use the "poster" tag, which is assigned to each object that is created within the script.
 
 A screenshot of the UI can be seen below:
-![img](media/assignment_3/ui.jpeg)
+
+<img src="media/assignment_3/ui.jpeg" height="450" />
 
 ### <ins>Exercise 2</ins>
 For this exercise we started with a bit of a refactoring, this made it easier to handle what is effectively 2 different states of our application: The "adding" state and the "interact" state. To model this we split up the intended functionality into 3 parts: The "State" class would be responsible for knowing which state we are in, and enabling/disabling the other 2 classes based on the state. The "RealObjectAdder" class would be responsible for the "adding" state and the "RealObjectInteracter" class would be responsible for the "interact" state (e.g showing deletion button when an object is selected).
@@ -45,7 +46,7 @@ To let the user delete the selected object, we SetActive(true) on the "Delete" b
 ### <ins>Exercise 3</ins>
 For this exercise we enable translational and rotational motion of the object. We enable translation when the user selects an object and uses one finger to drag it across the screen. This does not affect any other virtual objects that the selected object is very close to. At all times we check for the existence of a (vertical) plane before moving. 
 
-![img](media/assignment_3/movement.png)
+<img src="media/assignment_3/movement.png" height="500" />
 
 ```c#
 // One finger touches the screen. Is the user selecting, deselecting or moving?
@@ -98,7 +99,8 @@ if (touches.Length == 1 && this.checkForMovement && touches[0].phase == TouchPha
 
 If, after selection, the user is touching the screen with multiple fingers, we assume the user wishes to rotate the object. For this, we track the starting and ending positions of both fingers (v1 and v2 for the starting position, and v3 and v4 for the end position). We use the difference between the slopes of the line for these two pairs of positions to compute the angle by which we must rotate the object.
 
-![img](media/assignment_3/rotation.png)
+<img src="media/assignment_3/rotation.png" height="500" />
+
 
 ```c#
 // Check for rotation if an object is selected.
@@ -126,7 +128,7 @@ if (touches.Length == 2 && touches[0].phase == TouchPhase.Moved && touches[1].ph
 
 A demonstration of what was previously explained can be seen below.
 
-![img](media/assignment_3/movement-rotation.gif)
+<img src="media/assignment_3/movement-rotation.gif" height="450" />
 
 ## Conclusion
 During this week's exercises we learned how to manipulate specific objects. We learned that, for vertical surfaces, the indication marker changes its dimensions depending on the angle. 
