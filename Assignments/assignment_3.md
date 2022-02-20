@@ -99,7 +99,7 @@ public void DeleteSelectedObject() {
 }
 ```
 
-WILL ADD VIDEO HERE.
+<img src="media/assignment_3/delete-item.gif" height="450" />
 
 ### <ins>Exercise 3</ins>
 For this exercise we enable translational and rotational motion of the object. We enable translation when the user selects an object and uses one finger to drag it across the screen. This does not affect any other virtual objects that the selected object is very close to. At all times we check for the existence of a (vertical) plane before moving. 
