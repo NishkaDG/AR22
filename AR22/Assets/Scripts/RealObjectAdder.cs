@@ -130,25 +130,22 @@ public class RealObjectAdder : MonoBehaviour
 
         touches = Input.touches;
 
+        // One finger touches the screen. Is the user selecting, deselecting or moving?
         if (touches.Length == 1 && touches[0].phase == TouchPhase.Began) {
             this.hasMoved = false;
             this.lastTwoFingerPosition = null;
             
-            Debug.Log("Touch has been registered");
-
-            // Selecting an object
             ray = Camera.main.ScreenPointToRay(touches[0].position);
 
+            // Is the finger pointing at something?
             if (Physics.Raycast(ray, out hit)) {
                 // We have selected the same object.
                 // Are we deselecting or moving the object?
                 if (this.selectedObject == hit.transform.gameObject) {
-                    Debug.Log("This is the same object as before");
                     this.checkForMovement = true;
                 // We have selected a different object,
                 // no need to check for movement.
                 } else {
-                    Debug.Log("This is NOT the same object as before");
                     this.checkForMovement = false;
                     
                     // If there was an old selected object, change its color
@@ -164,37 +161,35 @@ public class RealObjectAdder : MonoBehaviour
 
         }
 
-        if (touches.Length == 1 && touches[0].phase == TouchPhase.Moved) {
-            Debug.Log("Touch has moved");
+        // If the user pointed at an already selected object, check for movement and move the object.
+        if (touches.Length == 1 && this.checkForMovement && touches[0].phase == TouchPhase.Moved && this.selectedObject) {
             this.hasMoved = true;
+            List<ARRaycastHit> hits = new List<ARRaycastHit>();
+            if (raycastManager.Raycast(touches[0].position, hits)) {
+                if (hits[0].trackable is ARPlane) {
+                    this.selectedObject.transform.position = hits[0].pose.position;
+                    this.selectedObject.transform.rotation = hits[0].pose.rotation;
+                }
+            }
         }
 
+        // If the user has stopped touching the screen and we were unsure whether he was deselecting
+        // an object or moving an object, make a decision based on whether he moved his finger.        
         if (touches.Length == 1 && this.checkForMovement && touches[0].phase == TouchPhase.Ended) {
             // Move object
-            if (this.hasMoved) {
-                Debug.Log("CHECKING IF A PLANE IS ON THE WAY OF MOVING");
-                List<ARRaycastHit> hits = new List<ARRaycastHit>();
-                if (raycastManager.Raycast(touches[0].position, hits)) {
-                    if (hits[0].trackable is ARPlane) {
-                        Debug.Log("THERE IS A PLANE");
-                        this.selectedObject.transform.position = hits[0].pose.position;
-                        this.selectedObject.transform.rotation = hits[0].pose.rotation;
-                    }
-                }
-            // No movement was done, thus we deselect the object.
-            } else {
-                Debug.Log("Selected object should be deselected");
+            if (!this.hasMoved) {
                 this.selectedObject.GetComponent<Renderer>().material.color = Color.white;
                 this.selectedObject = null;
                 this.deleteItemButton.interactable = false;
+            // No movement was done, thus we deselect the object.
             }
             
             this.lastTwoFingerPosition = null;
             this.checkForMovement = this.hasMoved = false;
         }
 
-        // Two fingers are moving
-		if (touches.Length == 2 && touches[0].phase == TouchPhase.Moved && touches[1].phase == TouchPhase.Moved) {
+        // Check for rotation if an object is selected.
+		if (touches.Length == 2 && touches[0].phase == TouchPhase.Moved && touches[1].phase == TouchPhase.Moved && this.selectedObject) {
             
             currTwoFingerPosition = new Vector2[] {touches[0].position, touches[1].position};
             
