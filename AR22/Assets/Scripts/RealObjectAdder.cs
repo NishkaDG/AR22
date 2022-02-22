@@ -35,7 +35,7 @@ public class RealObjectAdder : MonoBehaviour
 
     [SerializeField]
     Button deleteAllButton;
-    
+	
     private void EnableButton(Button btn) {
         btn.interactable = true;
     }
@@ -107,7 +107,7 @@ public class RealObjectAdder : MonoBehaviour
             DisableButton(this.deleteAllButton);
         }
     }
-    
+	
     public void DeleteAllObjects() {
         GameObject[] objs = GameObject.FindGameObjectsWithTag("poster");
         
