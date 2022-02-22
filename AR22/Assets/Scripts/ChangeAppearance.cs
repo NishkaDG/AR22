@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.EventSystems;
 
 public class ChangeAppearance : MonoBehaviour
 {
     private bool animated = false;
 	private float timer;
-	
+		
 	// Start is called before the first frame update
     void Start()
     {
@@ -23,16 +26,16 @@ public class ChangeAppearance : MonoBehaviour
 		if(animated) {
 			timer = timer + Time.deltaTime;
 			if(timer >= 0.5) {
-				this.GetComponent<Text>().enabled = true;
+				this.GetComponent<Button>().enabled = true;
 			}
 			if(timer >= 1) {
-				this.GetComponent<Text>().enabled = false;
+				this.GetComponent<Button>().enabled = false;
 				timer = 0;
 			}
 		}
 		
 		else {
-			this.GetComponent<Text>().enabled = false;
+			this.GetComponent<Button>().enabled = false;
 		}
 	}
 }
