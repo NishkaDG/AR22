@@ -11,14 +11,19 @@ public class RealObjectAdder : MonoBehaviour
     Camera camera;
 
     [SerializeField]
-    GameObject placeholder;
+    private GameObject placeholder;
     
     private bool hasMoved;
     private bool checkForMovement;
     private Vector2[] lastTwoFingerPosition;
 
-    private Material materialToAdd;
+    private Material currentMaterial;
+    private String currentName;
+    
     private GameObject selectedObject;
+
+    [SerializeField] 
+    private GameObject posterPrefab;
     
     [SerializeField]
     Renderer placeholderRenderer;
@@ -62,31 +67,35 @@ public class RealObjectAdder : MonoBehaviour
         }
     }
 
-    public void ChangeObjectToAdd(Material material) {
-        if (this.materialToAdd == material) {
-            this.materialToAdd = null;
+    public void ChangeCurrentMaterial(Material material) {
+        if (this.currentMaterial == material) {
+            this.currentMaterial = null;
             DisableButton(this.placeItemButton);
         } else {
-            this.materialToAdd = material;        
+            this.currentMaterial = material;
+            EnableButton(this.placeItemButton);
+        }
+    }
+
+    public void changeCurrentName(String name)
+    {
+        if (this.currentName == name) {
+            this.currentName = null;
+            DisableButton(this.placeItemButton);
+        } else {
+            this.currentName = name;
             EnableButton(this.placeItemButton);
         }
     }
 
     public void AddObject() {
-        GameObject obj;
-        Vector3 position;
-        Quaternion rotation;
-        
-        if (showingPlaceholder && this.materialToAdd) {
-            position = placeholder.transform.position;
-            rotation = placeholder.transform.rotation;
-            obj = GameObject.CreatePrimitive(PrimitiveType.Plane);
-            obj.transform.position = position;
-            obj.transform.rotation = rotation;
-            obj.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
-            obj.GetComponent<Renderer>().material = this.materialToAdd;
+        if (showingPlaceholder && this.currentMaterial) {
+            Vector3 position = placeholder.transform.position;
+            Quaternion rotation = placeholder.transform.rotation;
+            GameObject obj = Instantiate(posterPrefab, position, rotation);
+            obj.GetComponent<Renderer>().material = this.currentMaterial;
+            obj.GetComponentInChildren<TextMesh>().text = this.currentName;
             obj.tag = "poster";
-            
             EnableButton(this.deleteAllButton);
         }
     }
@@ -222,7 +231,7 @@ public class RealObjectAdder : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         this.camera = Camera.main;
-        this.materialToAdd = null;
+        this.currentMaterial = null;
         this.showingPlaceholder = false;
         this.placeholderRenderer.enabled = false;
         

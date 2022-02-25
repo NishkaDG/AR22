@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class ChangeAppearance : MonoBehaviour
 {
-    private bool animated = false;
+    private bool animated = true;
 	private float timer;
 		
 	// Start is called before the first frame update
@@ -23,19 +23,20 @@ public class ChangeAppearance : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if(animated) {
+	    Debug.Log("change appearance");
+	    if(animated) {
 			timer = timer + Time.deltaTime;
 			if(timer >= 0.5) {
-				this.GetComponent<Button>().enabled = true;
+				this.transform.GetChild(0).gameObject.SetActive(true);
 			}
 			if(timer >= 1) {
-				this.GetComponent<Button>().enabled = false;
+				this.transform.GetChild(0).gameObject.SetActive(false);
 				timer = 0;
 			}
 		}
 		
 		else {
-			this.GetComponent<Button>().enabled = false;
+		    this.transform.GetChild(0).gameObject.SetActive(false);
 		}
 	}
 }
