@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class ChangeAppearance : MonoBehaviour
 {
-    private bool animated = true;
+    private bool animated = false;
 	private float timer;
 		
 	// Start is called before the first frame update
@@ -16,7 +16,7 @@ public class ChangeAppearance : MonoBehaviour
         
     }
 	
-	void ToggleAnimated() {
+	public void ToggleAnimated() {
 		animated = !animated;
 	}
 

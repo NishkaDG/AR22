@@ -40,6 +40,12 @@ public class RealObjectAdder : MonoBehaviour
 
     [SerializeField]
     Button deleteAllButton;
+    
+    [SerializeField]
+    Button animateButton;
+    
+    [SerializeField]
+    Button displayButton;
 	
     private void EnableButton(Button btn) {
         btn.interactable = true;
@@ -61,9 +67,13 @@ public class RealObjectAdder : MonoBehaviour
             this.selectedObject.GetComponent<Renderer>().material.color = Color.yellow;
             Debug.Log("An object has been selected");
             EnableButton(this.deleteItemButton);
+            EnableButton(this.displayButton);
+            EnableButton(this.animateButton);
         } else {
             Debug.Log("An object has been deselected");
             DisableButton(this.deleteItemButton);
+            DisableButton(this.displayButton);
+            DisableButton(this.animateButton);
         }
     }
 
@@ -226,6 +236,11 @@ public class RealObjectAdder : MonoBehaviour
 
             this.lastTwoFingerPosition = currTwoFingerPosition;
 		}
+    }
+
+    public void toggleAnimate()
+    {
+        this.selectedObject.GetComponent<ChangeAppearance>().ToggleAnimated();
     }
     
     // Start is called before the first frame update
