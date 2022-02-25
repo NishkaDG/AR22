@@ -238,6 +238,24 @@ public class RealObjectAdder : MonoBehaviour
 		}
     }
 
+    public void toggleGlossy()
+    {
+        Material mat = this.selectedObject.GetComponent<Renderer>().material;
+        float currentGlossiness = mat.GetFloat("_Glossiness");
+
+        if (currentGlossiness == 0.0)
+        {
+            mat.SetFloat("_Glossiness", 1);
+            mat.SetFloat("_Metallic", 1);
+        }
+        else
+        {
+            mat.SetFloat("_Glossiness", 0);
+            mat.SetFloat("_Metallic", 0);
+        }
+        
+    }
+
     public void toggleAnimate()
     {
         this.selectedObject.GetComponent<ChangeAppearance>().ToggleAnimated();
