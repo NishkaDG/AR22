@@ -1,31 +1,34 @@
 # Assignment 4 - Interaction techniques (graded)
 
-**Date**: [TODO: date]
+**Date**: 20/02/2022
 
-**Group members participating**: [TODO: insert names]
+**Group members participating**: Rasmus Thorsøe, Sam Martin Vargas Giagnocavo and Nishka Dasgupta.
 
-**Activity duration**: [TODO: Insert hours spend]
+**Activity duration**: 7-8 hours
 
 ## Goal
-[TODO: goal of this weeks exercises]
+- Further develop our AR app.
+- Enable an expanded selection of objects for users to choose from.
+- Enable customisation and animation of objects.
 
 ## Plan
-[TODO: plan of this weeks exercises]
+The plan was for Sam to work on Exercise 1 (designing the catalogue), and for Nishka and Rasmus to do Exercises 2.1 (animation) and 2.2 (customisation)
+respectively. 
 
 ## Results
-[TODO: results for this weeks exercises]
 
-### Technique 1 - [TODO: Name]
+
+### Exercise 1
 [TODO: description]
 
-### Technique 2 - [TODO: Name]
+### Exercise 2.1
 [TODO: description]
 
-### Technique 3 - [TODO: Name]
+### Exercise 2.2
 [TODO: description]
 
 ## Conclusion
 [TODO: conclusions of this weeks exercises]
 
 ## References
-[TODO: used references]
+- [Unity Docs](https://docs.unity3d.com/Manual/index.html)
