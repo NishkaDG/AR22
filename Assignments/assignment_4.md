@@ -28,7 +28,7 @@ In this exercise we had to tackle two problems: Easily increase the number of it
 <img src="media/assignment_4/extra-components.png" height="200" />
 </p>
 
-Finally, we had to find a way of dinamically managing a catalogue within our application. In order to implement this, we decided to expand our implementation of the poster selection panel by adding a `Scroll View` object (which we call *Poster Catalogue*) to our canvas. Just like in the "Main Buttons" object, we added a "Horizontal Layout Group" and a "Content Size Filter" to the content of the `Scroll View`. Adittionally, a script called `Catalogue.cs` was also added to the content. Since our app consists of displaying posters, we don't work with 3D models but 2D textures. Consequently, the function of our catalogue script is to retrieve all of the 2D Textures available (this is done with `Resources.LoadAll`) and create their respective buttons (from a prefab) and materials.
+Finally, we had to find a way of dynamically managing a catalogue within our application. In order to implement this, we decided to expand our implementation of the poster selection panel by adding a `Scroll View` object (which we call *Poster Catalogue*) to our canvas. Just like in the "Main Buttons" object, we added a "Horizontal Layout Group" and a "Content Size Filter" to the content of the `Scroll View`. Adittionally, a script called `Catalogue.cs` was also added to the content. Since our app consists of displaying posters, we don't work with 3D models but 2D textures. Consequently, the function of our catalogue script is to retrieve all of the 2D Textures available (this is done with `Resources.LoadAll`) and create their respective buttons (from a prefab) and materials.
 
 ```c#
 void Start()
