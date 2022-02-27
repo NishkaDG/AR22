@@ -37,8 +37,6 @@ public class Catalogue : MonoBehaviour
             to.onValueChanged.AddListener(delegate {
                 realObjAdder.ChangeCurrentMaterial(materials[assignedIndex]);
                 realObjAdder.ChangeCurrentName(sprites[assignedIndex].name);
-                Debug.Log(materials[assignedIndex]);
-                Debug.Log(sprites[assignedIndex].name);
             });
 
             Image img = go.GetComponentInChildren<Image>();

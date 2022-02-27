@@ -20,10 +20,55 @@ we decided to let the user select if they wanted the texture of the poster to be
 ## Results
 
 
-### Exercise 1
-[TODO: description]
+### <ins>Exercise 1</ins>
+In this exercise we had to tackle two problems: Easily increase the number of items in our catalogue without major changes in our code and making the UI usable regardless of the resolution or orientation of the device. While in the last assignment we already tackled the latter challenge by using anchors we would like to have the possibility of adding more items in our UI. To achieve this, we decided to put all of our buttons in a parent called "Main Buttons". This object would include a "Horizontal Layout Group" and a "Content Size Filter" to spread the buttons evenly and change their size if required.
 
-### Exercise 2.1
+<p float="left">
+<img src="media/assignment_4/main-buttons.png" height="200" />
+<img src="media/assignment_4/extra-components.png" height="200" />
+</p>
+
+Finally, we had to find a way of dinamically managing a catalogue within our application. In order to implement this, we decided to expand our implementation of the poster selection panel by adding a `Scroll View` object (which we call *Poster Catalogue*) to our canvas. Just like in the "Main Buttons" object, we added a "Horizontal Layout Group" and a "Content Size Filter" to the content of the `Scroll View`. Adittionally, a script called `Catalogue.cs` was also added to the content. Since our app consists of displaying posters, we don't work with 3D models but 2D textures. Consequently, the function of our catalogue script is to retrieve all of the 2D Textures available (this is done with `Resources.LoadAll`) and create their respective buttons (from a prefab) and materials.
+
+```c#
+void Start()
+{
+    // We are creating materials from the 2D Textures.
+    materials = new List<Material>();
+    // Load all Sprites from the Resources/Posters folder
+    Sprite[] sprites = Resources.LoadAll<Sprite>("Posters");
+    for (int x = 0; x < sprites.Length; x++) {
+        // Create toggle button
+        GameObject go = Instantiate(togglePosterPrefab, this.transform);
+        go.SetActive(true);
+        
+        // Create material from 2D Texture / Sprite
+        Material mat = new Material(Shader.Find("Standard"));
+        mat.SetTexture("_MainTex", sprites[x].texture);
+        materials.Add(mat);
+        
+        // Add toggle button to Toggle Group
+        Toggle to = go.GetComponent<Toggle>(); 
+        to.group = toggleGroup;
+        
+        // Add relevant listener functions
+        int assignedIndex = x;
+        to.onValueChanged.AddListener(delegate {
+            realObjAdder.ChangeCurrentMaterial(materials[assignedIndex]);
+            realObjAdder.ChangeCurrentName(sprites[assignedIndex].name);
+        });
+
+        // Add 2D Texture / Sprite to toggle button
+        Image img = go.GetComponentInChildren<Image>();
+        img.sprite = sprites[x];
+    }
+}
+```
+
+A demostration of the new layout can be seen below (at the beginning we can see the original 2D Textures being used, which are then turned into buttons and materials):
+![img](media/assignment_4/ui.gif)
+
+### <ins>Exercise 2.1</ins>
 For the animation we decided to go with blinking text displaying the name of the artwork that the user has placed from the catalogue. The name of the artwork is 
 a 3DText object created as the child of each artwork. We then use a timer to periodically enable and disable it for as long as the toggle for animation is on. The code for the animation can be seen here: 
 
@@ -51,7 +96,7 @@ The animation can be seen in the following video:
 
 INSERT VIDEO OF ANIMATION
 
-### Exercise 2.2
+### <ins>Exercise 2.2</ins>
 For customisation we decided to let the user choose real-world texture of the object, i.e, should the artwork be matte or glossy. The code can be seen here: 
 ```c#
 public void toggleGlossy()
