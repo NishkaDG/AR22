@@ -74,57 +74,61 @@ a 3DText object created as the child of each artwork. We then use a timer to per
 
 ```c#
 void Update()
-    {
-	    if(animated) {
-			timer = timer + Time.deltaTime;
-			if(timer >= 0.5) {
-				this.transform.GetChild(0).gameObject.SetActive(true);
-			}
-			if(timer >= 1) {
-				this.transform.GetChild(0).gameObject.SetActive(false);
-				timer = 0;
-			}
-		}
-		else {
-		    this.transform.GetChild(0).gameObject.SetActive(false);
-		}
-	}
+{
+    if(animated) {
+        timer = timer + Time.deltaTime;
+        if(timer >= 0.5) {
+            this.transform.GetChild(0).gameObject.SetActive(true);
+        }
+        if(timer >= 1) {
+            this.transform.GetChild(0).gameObject.SetActive(false);
+            timer = 0;
+        }
+    }
+    else {
+        this.transform.GetChild(0).gameObject.SetActive(false);
+    }
+}
 ```
 
-The script is attached to any piece of artwork the user has placed in the world. The "animated" boolean is toggled on and off when the corresponding button is clicked. 
+The script is attached to any piece of artwork the user has placed in the world. The "animated" boolean is toggled on and off when the corresponding button is clicked.
+
 The animation can be seen in the following video: 
 
-INSERT VIDEO OF ANIMATION
+![img](media/assignment_4/anim.gif)
 
 ### <ins>Exercise 2.2</ins>
 For customisation we decided to let the user choose real-world texture of the object, i.e, should the artwork be matte or glossy. The code can be seen here: 
 ```c#
 public void toggleGlossy()
-    {
-        Material mat = this.selectedObject.GetComponent<Renderer>().material;
-        float currentGlossiness = mat.GetFloat("_Glossiness");
+{
+    Material mat = this.selectedObject.GetComponent<Renderer>().material;
+    float currentGlossiness = mat.GetFloat("_Glossiness");
 
-        if (currentGlossiness == 0.0)
-        {
-            mat.SetFloat("_Glossiness", 1);
-            mat.SetFloat("_Metallic", 1);
-        }
-        else
-        {
-            mat.SetFloat("_Glossiness", 0);
-            mat.SetFloat("_Metallic", 0);
-        } 
+    if (currentGlossiness == 0.0)
+    {
+        mat.SetFloat("_Glossiness", 1);
+        mat.SetFloat("_Metallic", 1);
     }
+    else
+    {
+        mat.SetFloat("_Glossiness", 0);
+        mat.SetFloat("_Metallic", 0);
+    } 
+}
 ```
 
-Here you can see the effect in the app, the poster on the left is maximum metallic/glossy, and the poster on the right is minimum metallic glossy. 
 The effect is not quite what we had hoped for, and is not what we would expect to see in real life. This is probably due to our AR app not properly understanding the lighting in the real world, as the appearance of glossy/metallic surfaces are very dependent on the exact location, intensity and colour of light. 
 
-INSERT VIDEO
+In the video you can see the effect in the app, the poster toggles between a maximum metallic/glossy material, and a minimum metallic glossy material.
+
+![img](media/assignment_4/change-material.gif)
 
 ## Conclusion
 During this weeks exercises we have learned how to arrange the UI such that it works regardless of the users phone orientation.
+
 We have created more interesting objects, and learned how to toggle states on and off for individual objects, and how to do simple animations in unity. 
+
 We have also learned that the use of light (or materials that require light) in AR applications is not trivial. 
 
 ## References
