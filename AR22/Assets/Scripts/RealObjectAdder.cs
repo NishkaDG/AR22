@@ -49,6 +49,9 @@ public class RealObjectAdder : MonoBehaviour
     
     [SerializeField]
     Button displayButton;
+
+    [SerializeField]
+    Button catalogButton;
 	
     private void EnableButton(Button btn) {
         btn.interactable = true;
@@ -56,6 +59,14 @@ public class RealObjectAdder : MonoBehaviour
 
     private void DisableButton(Button btn) {
         btn.interactable = false;
+    }
+
+    private void ToggleButton(Button btn) {
+        btn.interactable = !btn.IsInteractable();
+    }
+    
+    public void ToggleCatalogue(GameObject catalogue) {
+        catalogue.SetActive(!catalogue.activeSelf);
     }
     
     private void SelectObject(GameObject obj) {
@@ -90,7 +101,7 @@ public class RealObjectAdder : MonoBehaviour
         }
     }
 
-    public void changeCurrentName(String name)
+    public void ChangeCurrentName(String name)
     {
         if (this.currentName == name) {
             this.currentName = null;
@@ -264,6 +275,7 @@ public class RealObjectAdder : MonoBehaviour
             {
                 int new_index = (index + 1) % materials.Length;
                 renderer.material = materials[new_index];
+                SelectObject(this.selectedObject);
             }
         }
     }
