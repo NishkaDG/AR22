@@ -23,7 +23,6 @@ public class ChangeAppearance : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-	    Debug.Log("change appearance");
 	    if(animated) {
 			timer = timer + Time.deltaTime;
 			if(timer >= 0.5) {

@@ -17,7 +17,7 @@ public class RealObjectAdder : MonoBehaviour
     private bool checkForMovement;
     private Vector2[] lastTwoFingerPosition;
 
-    private Material currentMaterial;
+    private int currentMaterial;
     private String currentName;
     
     private GameObject selectedObject;
@@ -31,6 +31,9 @@ public class RealObjectAdder : MonoBehaviour
 
     [SerializeField]
     ARRaycastManager raycastManager;
+
+    [SerializeField] 
+    private Material[] materials;
     
     [SerializeField]
     Button placeItemButton;
@@ -77,9 +80,9 @@ public class RealObjectAdder : MonoBehaviour
         }
     }
 
-    public void ChangeCurrentMaterial(Material material) {
+    public void ChangeCurrentMaterial(int material) {
         if (this.currentMaterial == material) {
-            this.currentMaterial = null;
+            this.currentMaterial = -1;
             DisableButton(this.placeItemButton);
         } else {
             this.currentMaterial = material;
@@ -99,11 +102,11 @@ public class RealObjectAdder : MonoBehaviour
     }
 
     public void AddObject() {
-        if (showingPlaceholder && this.currentMaterial) {
+        if (showingPlaceholder && this.currentMaterial != -1) {
             Vector3 position = placeholder.transform.position;
             Quaternion rotation = placeholder.transform.rotation;
             GameObject obj = Instantiate(posterPrefab, position, rotation);
-            obj.GetComponent<Renderer>().material = this.currentMaterial;
+            obj.GetComponent<Renderer>().material = this.materials[this.currentMaterial];
             obj.GetComponentInChildren<TextMesh>().text = this.currentName;
             obj.tag = "poster";
             EnableButton(this.deleteAllButton);
@@ -169,6 +172,7 @@ public class RealObjectAdder : MonoBehaviour
         Vector2[] currTwoFingerPosition;
 
         touches = Input.touches;
+        
 
         // One finger touches the screen. Is the user selecting, deselecting or moving?
         if (touches.Length == 1 && touches[0].phase == TouchPhase.Began) {
@@ -236,6 +240,32 @@ public class RealObjectAdder : MonoBehaviour
 
             this.lastTwoFingerPosition = currTwoFingerPosition;
 		}
+
+        
+        
+
+        if (touches.Length == 3 
+            && touches[0].phase == TouchPhase.Began 
+            && touches[1].phase == TouchPhase.Began
+            && touches[2].phase == TouchPhase.Began
+            &&this.selectedObject)
+        {
+            Debug.Log("3 fingers!");
+            Renderer renderer = this.selectedObject.GetComponent<Renderer>();
+            Material mat = renderer.material;
+            Debug.Log(mat.name);
+            int index = Array.FindIndex(materials, material =>
+            {
+                Debug.Log(material.name);
+                return mat.name.Contains(material.name);
+            });
+            Debug.Log(index);
+            if (index != -1)
+            {
+                int new_index = (index + 1) % materials.Length;
+                renderer.material = materials[new_index];
+            }
+        }
     }
 
     public void toggleGlossy()
@@ -264,7 +294,7 @@ public class RealObjectAdder : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         this.camera = Camera.main;
-        this.currentMaterial = null;
+        this.currentMaterial = -1;
         this.showingPlaceholder = false;
         this.placeholderRenderer.enabled = false;
         
