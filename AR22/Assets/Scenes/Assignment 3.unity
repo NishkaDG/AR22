@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -158,16 +158,14 @@ MonoBehaviour:
   posterPrefab: {fileID: 215099684268678603, guid: 3377934bc7336924cabdd41af7736d8b, type: 3}
   placeholderRenderer: {fileID: 465537145}
   raycastManager: {fileID: 1253257732}
-  materials:
-  - {fileID: 2100000, guid: 04d0d5125db754443952b805963584b4, type: 2}
-  - {fileID: 2100000, guid: f5dde74aec0b8a64793d9326ab276a6a, type: 2}
-  - {fileID: 2100000, guid: b190158d16fa512448a6eed500125b16, type: 2}
   placeItemButton: {fileID: 566008897}
   deleteItemButton: {fileID: 2065035781}
   deleteAllButton: {fileID: 251129597}
   animateButton: {fileID: 1445965864}
   displayButton: {fileID: 223972242}
   catalogButton: {fileID: 454982374}
+  trackedImageManager: {fileID: 1253257733}
+  lampPrefab: {fileID: 1323608309969794, guid: b69799b6680a89d468a5de91640dd387, type: 3}
 --- !u!4 &102953860
 Transform:
   m_ObjectHideFlags: 0
@@ -1401,6 +1399,7 @@ GameObject:
   - component: {fileID: 1253257729}
   - component: {fileID: 1253257731}
   - component: {fileID: 1253257732}
+  - component: {fileID: 1253257733}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -1463,6 +1462,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RaycastPrefab: {fileID: 0}
+--- !u!114 &1253257733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253257728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedLibrary: {fileID: 11400000, guid: 38271e1d6735f41468f078b78ae271b3, type: 2}
+  m_MaxNumberOfMovingImages: 0
+  m_TrackedImagePrefab: {fileID: 0}
 --- !u!1 &1445965862
 GameObject:
   m_ObjectHideFlags: 0

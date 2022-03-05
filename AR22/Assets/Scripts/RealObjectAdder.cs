@@ -32,9 +32,6 @@ public class RealObjectAdder : MonoBehaviour
     [SerializeField]
     ARRaycastManager raycastManager;
 
-    [SerializeField] 
-    private Material[] materials;
-    
     [SerializeField]
     Button placeItemButton;
 
@@ -52,6 +49,12 @@ public class RealObjectAdder : MonoBehaviour
 
     [SerializeField]
     Button catalogButton;
+    
+    [SerializeField]
+    ARTrackedImageManager trackedImageManager;
+    
+    [SerializeField]
+    GameObject lampPrefab;    
 	
     private void EnableButton(Button btn) {
         btn.interactable = true;
@@ -91,24 +94,26 @@ public class RealObjectAdder : MonoBehaviour
         }
     }
 
-    public void ChangeCurrentMaterial(int material) {
-        if (this.currentMaterial == material) {
+    public void ChangeCurrentMaterial(int matIdx) {
+        if (this.currentMaterial == matIdx) {
             this.currentMaterial = -1;
             DisableButton(this.placeItemButton);
         } else {
-            this.currentMaterial = material;
+            this.currentMaterial = matIdx;
             EnableButton(this.placeItemButton);
         }
     }
 
-    public void ChangeCurrentName(String name)
+    public void ChangeCurrentName(int posterIdx)
     {
-        if (this.currentName == name) {
+        Debug.Log("We change the name to: " + posterIdx);
+        string actualName = Catalogue.posternames[posterIdx];
+        if (this.currentName == actualName) {
+            Debug.Log("Deny change");
             this.currentName = null;
-            DisableButton(this.placeItemButton);
         } else {
-            this.currentName = name;
-            EnableButton(this.placeItemButton);
+            Debug.Log("Confirm change");
+            this.currentName = actualName;
         }
     }
 
@@ -117,7 +122,7 @@ public class RealObjectAdder : MonoBehaviour
             Vector3 position = placeholder.transform.position;
             Quaternion rotation = placeholder.transform.rotation;
             GameObject obj = Instantiate(posterPrefab, position, rotation);
-            obj.GetComponent<Renderer>().material = this.materials[this.currentMaterial];
+            obj.GetComponent<Renderer>().material = Catalogue.materials[this.currentMaterial];
             obj.GetComponentInChildren<TextMesh>().text = this.currentName;
             obj.tag = "poster";
             EnableButton(this.deleteAllButton);
@@ -259,24 +264,41 @@ public class RealObjectAdder : MonoBehaviour
             && touches[0].phase == TouchPhase.Began 
             && touches[1].phase == TouchPhase.Began
             && touches[2].phase == TouchPhase.Began
-            &&this.selectedObject)
+            && this.selectedObject)
         {
             Debug.Log("3 fingers!");
             Renderer renderer = this.selectedObject.GetComponent<Renderer>();
+            TextMesh textMesh = this.selectedObject.GetComponentInChildren<TextMesh>();
             Material mat = renderer.material;
-            Debug.Log(mat.name);
-            int index = Array.FindIndex(materials, material =>
-            {
-                Debug.Log(material.name);
+
+            int index = Catalogue.materials.FindIndex(material => {
                 return mat.name.Contains(material.name);
             });
-            Debug.Log(index);
+
             if (index != -1)
             {
-                int new_index = (index + 1) % materials.Length;
-                renderer.material = materials[new_index];
+                int new_index = (index + 1) % Catalogue.materials.Count;
+                renderer.material = Catalogue.materials[new_index];
+                Debug.Log(renderer.material.mainTexture.name);
+                // FIX THIS
+                /* textMesh.text = renderer.material.mainTexture.name; */
                 SelectObject(this.selectedObject);
             }
+        }
+    }
+    
+    public void OnImageTrackerUpdate(ARTrackedImagesChangedEventArgs eventArgs) {
+        foreach (var newImage in eventArgs.added)
+        {
+            Instantiate(lampPrefab, new Vector3(0, 0, 0), Quaternion.Euler(-90, 0, 0), newImage.transform);
+        }
+
+        foreach (var updatedImage in eventArgs.updated)
+        {
+        }
+
+        foreach (var removedImage in eventArgs.removed)
+        {
         }
     }
 
@@ -316,6 +338,10 @@ public class RealObjectAdder : MonoBehaviour
         DisableButton(this.placeItemButton);
         DisableButton(this.deleteItemButton);
         DisableButton(this.deleteAllButton);
+        
+        // Tracked images
+        trackedImageManager.trackedImagesChanged += OnImageTrackerUpdate;
+
     }
 
     // Update is called once per frame
